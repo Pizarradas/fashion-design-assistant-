@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estilo de Jose</title>
+<meta name="description" content="Guía personal de estilo de Jose: paleta de Otoño profundo, combinaciones por prenda, zapatos, gafas y arreglo.">
+<link rel="stylesheet" href="css/syx.css">
+<link rel="stylesheet" href="css/lenis.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@500&display=swap">
+<style>
+/* VOICE: lookbook de sastrería, sereno y preciso; habla de tú a Jose.
+   IDEA: el muestrario de un sastre: paños, colores y combinaciones en fichas.
+   PICTURE: el tablero ilustrado del look de oficina sobre un campo marino.
+   COLOUR and TYPE: crudo de fondo, marino dominante, burdeos de acento (su paleta); Syne (titulares) + Inter (texto); datos en Inter tabular (Taste: dos familias), medidas con gridcalc.
+   LAYOUT: retícula de 12 columnas a 80rem (Grid System); portada con solape reglado título/imagen; cabeceras de sección asimétricas. MOTION: gsap+lenis (movimiento.perfil). */
+@font-face { font-family: "Inter Fallback"; src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("Arimo"); size-adjust: 105.98%; ascent-override: 91.42%; descent-override: 22.76%; line-gap-override: 0%; }
+@font-face { font-family: "Syne Fallback"; src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("Arimo"); size-adjust: 120.55%; ascent-override: 76.73%; descent-override: 22.81%; line-gap-override: 0%; }
+@layer syx.reset, syx.base, syx.tokens, syx.atoms, syx.molecules, syx.organisms, syx.app, syx.utilities;
+
+/* capa: prototipo · overrides de tokens SYX con la paleta personal (fuera de capa, tras SYX) */
+:root {
+  --semantic-color-primary: oklch(0.31 0.07 262);
+  --semantic-color-primary-strong: oklch(0.27 0.07 262);
+  --semantic-color-secondary: oklch(0.36 0.11 15);
+  --semantic-color-bg-primary: oklch(0.965 0.012 80);
+  --semantic-color-bg-secondary: oklch(0.93 0.017 80);
+  --semantic-color-bg-tertiary: oklch(0.9 0.022 78);
+  --semantic-color-bg-emphasis: oklch(0.26 0.06 262);
+  --semantic-color-on-emphasis: oklch(0.95 0.015 82);
+  --semantic-color-text-primary: oklch(0.24 0.012 260);
+  --semantic-color-text-secondary: oklch(0.44 0.02 60);
+  --semantic-color-border-default: oklch(0.85 0.02 75);
+  --semantic-color-link-default: oklch(0.31 0.07 262);
+  --semantic-color-link-hover: oklch(0.36 0.11 15);
+  --semantic-color-primary-text: oklch(0.31 0.07 262);
+  --semantic-color-secondary-text: oklch(0.38 0.11 15);
+  --semantic-color-tertiary: oklch(0.36 0.05 45);
+  --semantic-color-tertiary-text: oklch(0.36 0.05 45);
+  --semantic-color-quaternary: oklch(0.31 0.07 262);
+  --semantic-color-quinary: oklch(0.36 0.11 15);
+  --semantic-color-on-primary: oklch(0.96 0.012 80);
+  --semantic-color-on-secondary: oklch(0.96 0.012 80);
+  --semantic-color-on-tertiary: oklch(0.96 0.012 80);
+  --semantic-color-on-state-hover-primary: oklch(0.96 0.012 80);
+  --semantic-color-on-state-hover-secondary: oklch(0.96 0.012 80);
+  --semantic-color-on-state-hover-tertiary: oklch(0.96 0.012 80);
+  --semantic-color-state-hover-primary: oklch(0.24 0.07 262);
+  --semantic-color-state-hover-secondary: oklch(0.3 0.1 15);
+  --semantic-color-state-hover-tertiary: oklch(0.3 0.05 45);
+  --semantic-color-state-hover-quaternary: oklch(0.24 0.07 262);
+  --semantic-color-state-info: oklch(0.42 0.06 220);
+  --semantic-color-border-subtle: oklch(0.87 0.02 75);
+  --semantic-color-border-strong: oklch(0.55 0.03 70);
+  --semantic-focus-ring-color: oklch(0.31 0.07 262);
+  --semantic-color-selection-bg: oklch(0.31 0.07 262);
+  --semantic-color-selection-text: oklch(0.96 0.012 80);
+  --semantic-color-state-warning-text: oklch(0.45 0.1 65);
+  /* GRID SPEC (skill Grid System · gridcalc compose --font Inter-Regular.woff2 --lang es --use scanning --density spacious --body 17 --type-ratio 1.333):
+     cuerpo Inter 17px / 1.647 → u = 28px · titulares Syne Medium en escala 1.333 · datos Inter tabular */
+  --semantic-font-family-primary-bold: "Inter", "Inter Fallback", Arial, sans-serif;
+  --semantic-font-family-primary: "Inter", "Inter Fallback", Arial, sans-serif;
+  --semantic-font-family-heading: "Syne", "Syne Fallback", Arial, sans-serif;
+  --reset-html-font: normal normal 400 100%/1.647 "Inter", "Inter Fallback", Arial, sans-serif;
+  --reset-body-font-size: 1.0625rem;
+  --reset-body-line-height: 1.647;
+  --semantic-line-height-body: 1.647;
+  --component-title-font-family: "Syne", "Syne Fallback", Arial, sans-serif;
+  /* Syne Medium (0.469 em/car., cifras 0.534) en vez de Bold (0.543, cifras 0.649): Syne se ensancha con el peso, un 14 % de Bold a Medium */
+  --component-title-font-weight: 500;
+  --component-title-line-height: 1.174;
+  --component-title-h1: clamp(2.5169rem, 1.8652rem + 2.8963vw, 4.4719rem);
+  --component-title-h2: clamp(1.8875rem, 1.4163rem + 2.0942vw, 3.355rem);
+  --component-title-h3: clamp(1.4163rem, 1.2592rem + 0.6981vw, 1.8875rem);
+  --component-title-h4: clamp(1.0625rem, 0.8986rem + 0.7284vw, 1.4163rem);
+  --component-title-h5: 1.0625rem;
+  --component-title-h6: 1.0625rem;
+  --component-card-border-radius: 0.25rem;
+  --component-card-shadow: none;
+  --component-card-padding: 1.375rem;
+}
+:root[data-theme="dark"] {
+  --semantic-color-primary: oklch(0.8 0.06 255);
+  --semantic-color-primary-strong: oklch(0.85 0.05 255);
+  --semantic-color-secondary: oklch(0.72 0.11 15);
+  --semantic-color-bg-primary: oklch(0.19 0.02 258);
+  --semantic-color-bg-secondary: oklch(0.23 0.024 258);
+  --semantic-color-bg-tertiary: oklch(0.27 0.026 258);
+  --semantic-color-bg-emphasis: oklch(0.15 0.03 262);
+  --semantic-color-text-primary: oklch(0.93 0.015 82);
+  --semantic-color-text-secondary: oklch(0.76 0.02 75);
+  --semantic-color-border-default: oklch(0.34 0.03 258);
+  --semantic-color-link-default: oklch(0.82 0.06 255);
+  --semantic-color-link-hover: oklch(0.78 0.1 15);
+  --semantic-color-primary-text: oklch(0.82 0.06 255);
+  --semantic-color-secondary-text: oklch(0.78 0.1 15);
+  --semantic-color-tertiary: oklch(0.78 0.06 60);
+  --semantic-color-tertiary-text: oklch(0.8 0.06 60);
+  --semantic-color-on-primary: oklch(0.19 0.02 258);
+  --semantic-color-on-secondary: oklch(0.19 0.02 258);
+  --semantic-color-on-tertiary: oklch(0.19 0.02 258);
+  --semantic-color-on-state-hover-primary: oklch(0.19 0.02 258);
+  --semantic-color-on-state-hover-secondary: oklch(0.19 0.02 258);
+  --semantic-color-on-state-hover-tertiary: oklch(0.19 0.02 258);
+  --semantic-color-state-hover-primary: oklch(0.88 0.04 255);
+  --semantic-color-state-hover-secondary: oklch(0.8 0.09 15);
+  --semantic-color-state-hover-tertiary: oklch(0.85 0.05 60);
+  --semantic-color-state-info: oklch(0.7 0.06 220);
+  --semantic-color-border-subtle: oklch(0.3 0.03 258);
+  --semantic-color-border-strong: oklch(0.5 0.03 258);
+  --semantic-focus-ring-color: oklch(0.82 0.06 255);
+  --semantic-color-selection-bg: oklch(0.82 0.06 255);
+  --semantic-color-selection-text: oklch(0.19 0.02 258);
+  --semantic-color-state-warning-text: oklch(0.83 0.11 80);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --semantic-color-primary: oklch(0.8 0.06 255);
+    --semantic-color-primary-strong: oklch(0.85 0.05 255);
+    --semantic-color-secondary: oklch(0.72 0.11 15);
+    --semantic-color-bg-primary: oklch(0.19 0.02 258);
+    --semantic-color-bg-secondary: oklch(0.23 0.024 258);
+    --semantic-color-bg-tertiary: oklch(0.27 0.026 258);
+    --semantic-color-bg-emphasis: oklch(0.15 0.03 262);
+    --semantic-color-text-primary: oklch(0.93 0.015 82);
+    --semantic-color-text-secondary: oklch(0.76 0.02 75);
+    --semantic-color-border-default: oklch(0.34 0.03 258);
+    --semantic-color-link-default: oklch(0.82 0.06 255);
+    --semantic-color-link-hover: oklch(0.78 0.1 15);
+    --semantic-color-primary-text: oklch(0.82 0.06 255);
+    --semantic-color-secondary-text: oklch(0.78 0.1 15);
+    --semantic-color-tertiary: oklch(0.78 0.06 60);
+    --semantic-color-tertiary-text: oklch(0.8 0.06 60);
+    --semantic-color-on-primary: oklch(0.19 0.02 258);
+    --semantic-color-on-secondary: oklch(0.19 0.02 258);
+    --semantic-color-on-tertiary: oklch(0.19 0.02 258);
+    --semantic-color-on-state-hover-primary: oklch(0.19 0.02 258);
+    --semantic-color-on-state-hover-secondary: oklch(0.19 0.02 258);
+    --semantic-color-on-state-hover-tertiary: oklch(0.19 0.02 258);
+    --semantic-color-state-hover-primary: oklch(0.88 0.04 255);
+    --semantic-color-state-hover-secondary: oklch(0.8 0.09 15);
+    --semantic-color-state-hover-tertiary: oklch(0.85 0.05 60);
+    --semantic-color-state-info: oklch(0.7 0.06 220);
+    --semantic-color-border-subtle: oklch(0.3 0.03 258);
+    --semantic-color-border-strong: oklch(0.5 0.03 258);
+    --semantic-focus-ring-color: oklch(0.82 0.06 255);
+    --semantic-color-selection-bg: oklch(0.82 0.06 255);
+    --semantic-color-selection-text: oklch(0.19 0.02 258);
+    --semantic-color-state-warning-text: oklch(0.83 0.11 80);
+  --semantic-color-state-warning-text: oklch(0.83 0.11 80);
+  }
+}
+
+/* paso 1 · tokens del proyecto: leen roles semánticos */
+:root {
+  --jose-ground: var(--semantic-color-bg-primary);
+  --jose-ground-alt: var(--semantic-color-bg-secondary);
+  --jose-ink: var(--semantic-color-text-primary);
+  --jose-ink-soft: var(--semantic-color-text-secondary);
+  --jose-line: var(--semantic-color-border-default);
+  --jose-hero-bg: var(--semantic-color-bg-emphasis);
+  --jose-hero-ink: var(--semantic-color-on-emphasis);
+  --jose-accent: var(--semantic-color-secondary);
+  /* cadena de proximidad (gridcalc compose, densidad spacious; suelo del gutter subido a 24px para mantener padding < gutter ≤ margen, C11) */
+  --jose-micro: 0.5rem;
+  --jose-inner: 0.875rem;
+  --jose-gap: clamp(1.5rem, 1.25rem + 1.1111vw, 2.25rem);
+  --jose-margin: clamp(1.5rem, 0.5rem + 4.4444vw, 4.5rem);
+  --jose-band-pad: clamp(3.5rem, 2.3333rem + 5.1852vw, 7rem);
+  --jose-u: 1.75rem;
+  --jose-measure: 30.4em;
+  --jose-max: 80rem;
+  --jose-mono: var(--jose-text); /* Taste font-count: dos familias (Syne + Inter); cifras con tabular-nums */
+  --jose-display: "Syne", "Syne Fallback", Arial, sans-serif;
+  --jose-text: "Inter", "Inter Fallback", Arial, sans-serif;
+  --jose-dot: 0.9rem;
+  --jose-swatch-h: 5.5rem;
+  --jose-bar-h: 2.75rem;
+  --jose-pad: 1.375rem;
+  --jose-duration: var(--semantic-duration-base);
+  --jose-easing: var(--semantic-easing-out);
+}
+
+@layer syx.app {
+  /* syx-reuse-file: bandas y columnas de página; layout-grid cubre las rejillas internas, no el ancho de sección */
+  html { scroll-padding-top: 3.25rem; }
+  .jose-band[id] { scroll-margin-top: 0; }
+  body { overflow-x: clip; }
+  .jose-wrap { max-width: calc(var(--jose-max) + 2 * var(--jose-margin)); margin-inline: auto; padding-inline: var(--jose-margin); }
+  .jose-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: min(var(--jose-gap), 100% / 29); }
+  .jose-grid > * { grid-column: 1 / -1; min-width: 0; }
+  .jose-cols { display: grid; gap: var(--jose-gap); grid-template-columns: repeat(auto-fill, minmax(min(100%, max(15rem, (100% - 3 * var(--jose-gap)) / 4)), 1fr)); }
+  /* 5 fichas: la primera ocupa dos columnas para cerrar filas (Taste row-gap) · base móvil una columna */
+  .jose-cols--five { grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 37.5em) { .jose-cols--five { grid-template-columns: repeat(2, minmax(0, 1fr)); } .jose-cols--five > :first-child { grid-column: span 2; } }
+  @media (min-width: 64em) { .jose-cols--five { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .jose-cols--two { grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 50em) { .jose-cols--two { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .jose-cols--wide { grid-template-columns: repeat(auto-fill, minmax(min(100%, max(20rem, (100% - 2 * var(--jose-gap)) / 3)), 1fr)); }
+  .jose-look { display: grid; gap: var(--jose-band-pad); grid-template-columns: minmax(0, 1fr); align-items: start; padding-block-start: var(--jose-gap); }
+  @media (min-width: 50em) { .jose-look { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); } }
+
+  /* syx-reuse: checked org-site-header (trae selector de tema y cajón, no hacen falta aquí) — barra de anclas fija */
+  .jose-nav { position: sticky; top: 0; z-index: 5; background: color-mix(in oklch, var(--jose-ground) 82%, transparent); backdrop-filter: blur(14px) saturate(1.2); border-block-end: 1px solid var(--jose-line); font-size: 0.875rem; }
+  .jose-progress { position: absolute; inset-inline: 0; inset-block-end: -1px; height: 2px; background: var(--jose-accent); transform-origin: 0 50%; transform: scaleX(0); }
+  .jose-nav__row { display: flex; gap: var(--jose-gap); align-items: center; overflow-x: auto; padding-block: var(--jose-inner); white-space: nowrap; scrollbar-width: none; }
+  .jose-nav__row strong { font-family: var(--jose-display); font-weight: 500; letter-spacing: -0.01em; margin-inline-end: auto; }
+  .jose-nav__row a { flex: none; }
+
+  /* syx-reuse: checked mol-feature-card, layout-grid — necesita un campo de color a sangre */
+  .jose-band { padding-block: var(--jose-band-pad); background: var(--jose-ground); color: var(--jose-ink); }
+  .jose-band--alt { background: var(--jose-ground-alt); }
+  .jose-band--hero { background: var(--jose-hero-bg); color: var(--jose-hero-ink); }
+  .jose-band--hero { --component-title-color: var(--jose-hero-ink); --semantic-color-text-primary: var(--jose-hero-ink); --semantic-color-text-inverse: var(--jose-hero-ink); --component-button-tertiary-color: var(--jose-hero-ink); --component-button-tertiary-border: var(--jose-hero-ink); --component-button-tertiary-color-hover: var(--jose-hero-ink); --component-pill-subtle-color: var(--jose-hero-ink); --component-pill-subtle-border-color: var(--jose-hero-ink); --component-pill-subtle-bg: transparent; }
+  .jose-lead { max-inline-size: var(--jose-measure); color: var(--jose-ink-soft); }
+  /* cabecera de sección · O3 desplazamiento + O14 vacío activo: título en 1–7, entradilla en 9–12 desde 80em */
+  .jose-head { row-gap: var(--jose-inner); margin-block-end: var(--jose-u); }
+  .jose-head > .jose-lead { margin: 0; }
+  @media (min-width: 80em) {
+    .jose-grid.jose-head > h2 { grid-column: 1 / span 7; align-self: end; margin: 0; }
+    .jose-grid.jose-head > .jose-lead { grid-column: 9 / -1; align-self: end; }
+  }
+  /* portada · O11 solapamiento reglado (el título invade 1 columna de la imagen) + O12 ruptura: la tira de paleta sale a sangre */
+  .jose-hero { position: relative; overflow: clip; padding-block: var(--jose-band-pad) 0; min-height: calc(100svh - 3.5rem); display: grid; align-content: space-between; }
+  .jose-hero__grid { row-gap: var(--jose-u); align-items: end; }
+  .jose-hero__kicker { font-size: 0.9375rem; font-weight: 500; opacity: 0.86; margin: 0; }
+  .jose-hero__title { text-wrap: balance; letter-spacing: -0.02em; position: relative; z-index: 2; margin: 0; }
+  .jose-hero__text .jose-lead { font-size: var(--component-title-h4); line-height: 1.415; }
+  .jose-hero__pic { margin: 0; border-radius: 0.25rem; overflow: hidden; background: var(--jose-ground-alt); aspect-ratio: 4 / 5; }
+  .jose-hero__pic img { display: block; width: 100%; height: 112%; object-fit: cover; object-position: 50% 8%; }
+  @media (min-width: 64em) {
+    .jose-hero__grid { grid-template-rows: auto auto auto 1fr; }
+    .jose-grid > .jose-hero__kicker { grid-column: 1 / span 7; grid-row: 1; }
+    .jose-grid > .jose-hero__title { grid-column: 1 / span 8; grid-row: 2; }
+    .jose-grid > .jose-hero__pic { grid-column: 8 / -1; grid-row: 1 / span 4; align-self: stretch; aspect-ratio: auto; min-height: 28rem; }
+    .jose-grid > .jose-hero__text { grid-column: 1 / span 6; grid-row: 3; }
+    .jose-grid > .jose-stats { grid-column: 1 / span 7; grid-row: 4; align-self: end; }
+  }
+  .jose-hero__strip { display: flex; height: clamp(3.5rem, 2.3333rem + 5.1852vw, 7rem); margin-block-start: var(--jose-band-pad); width: 110%; margin-inline-start: -5%; }
+  .jose-hero__strip span { flex: 1; background: var(--jose-c); }
+  .jose-band--hero .jose-lead { color: var(--jose-hero-ink); opacity: 0.86; }
+  /* syx-reuse: checked atom-stat (cifra a clamp(2.5rem, 6vw, 4rem) sin token: en 7 columnas de portada no cabe) — cifra de portada en la escala +2 */
+  .jose-stats { display: grid; gap: var(--jose-gap); grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.5rem), 1fr)); }
+  .jose-fig { display: grid; gap: var(--jose-micro); align-content: start; }
+  .jose-fig__n { font-family: var(--jose-display); font-weight: 500; font-size: var(--component-title-h3); line-height: 1.159; white-space: nowrap; }
+  .jose-fig__l { font-size: 0.8125rem; line-height: 1.4; opacity: 0.78; }
+  .jose-stats { border-block-start: 1px solid color-mix(in oklch, currentColor 30%, transparent); padding-block-start: var(--jose-u); }
+  /* cifras: Syne Medium, peso del token rebajado; columnas con suelo para que la cifra más larga (8 car. a 64px ≈ 15rem) quepa sin pisarse */
+  .jose-figures { display: grid; gap: var(--jose-gap); grid-template-columns: repeat(auto-fit, minmax(min(100%, 15.5rem), 1fr)); --semantic-font-family-heading: var(--jose-display); --semantic-font-weight-black: 500; }
+  /* títulos dentro de fichas estrechas: Inter SemiBold, más compacto que Syne en 15–22 rem de ancho */
+  .jose-cols, .jose-look, .mol-tabs { --component-title-font-family: var(--jose-text); --component-title-font-weight: 600; --component-title-line-height: 1.236; }
+
+  /* syx-reuse: checked atom-pill (white-space: nowrap por diseño, para etiquetas cortas): un rótulo descriptivo de ficha tiene que poder partirse en fichas de 15rem */
+  .jose-kicker { margin: 0; font-size: 0.875rem; font-weight: 600; line-height: 1.5; color: var(--jose-accent); overflow-wrap: anywhere; }
+  .jose-kicker--warn { color: var(--semantic-color-state-warning-text); }
+  /* syx-reuse: checked atom-pill (texto, no muestra color) — una muestra de paño con su nombre */
+  .jose-swatch { display: grid; gap: 0.35rem; font-size: 0.875rem; }
+  .jose-swatch__chip { height: var(--jose-swatch-h); border-radius: 0.375rem; background: var(--jose-c); border: 1px solid var(--jose-line); }
+  .jose-swatch small { color: var(--jose-ink-soft); }
+  .jose-swatches { display: grid; gap: var(--jose-gap); grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr)); }
+  .jose-bar { display: flex; height: var(--jose-bar-h); border-radius: 0.375rem; overflow: hidden; margin-block: var(--jose-gap); }
+  .jose-bar span { background: var(--jose-c); display: grid; place-items: center; font-size: 0.8125rem; font-weight: 600; color: var(--jose-hero-ink); }
+  .jose-dot { display: inline-block; width: var(--jose-dot); height: var(--jose-dot); border-radius: 50%; background: var(--jose-c); border: 1px solid var(--jose-line); flex: none; margin-block-start: 0.3rem; }
+  .jose-garments { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.4rem; }
+  .jose-dash li::before { content: "—"; color: var(--jose-accent); flex: none; }
+  .jose-garments li { display: flex; gap: 0.6rem; align-items: flex-start; }
+  .jose-why { padding-inline-start: 1rem; border-inline-start: 2px solid var(--jose-accent); }
+  .jose-look__pic img { display: block; width: 100%; height: auto; border-radius: 0.5rem; }
+  .jose-combo .mol-card__media img { aspect-ratio: 3 / 4; display: block; width: 100%; object-fit: cover; object-position: 50% 30%; background: var(--jose-ground-alt); }
+  .jose-combo[hidden], .jose-ml[hidden] { display: none; }
+  .jose-strip { display: flex; height: 3.5rem; }
+  .jose-strip span { flex: 1; background: var(--jose-c); }
+  .jose-ml__items { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.55rem; }
+  .jose-ml__items li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 0.6rem; align-items: start; }
+  .jose-ml__alt { grid-column: 2 / -1; font-size: 0.8125rem; color: var(--jose-ink-soft); }
+  .jose-ml__total { display: flex; justify-content: space-between; gap: var(--jose-gap); border-block-start: 1px solid var(--jose-line); padding-block-start: 0.6rem; font-weight: 600; }
+
+  /* syx-reuse: checked atom-table (pinta celdas de texto; aquí cada celda es una marca de color) — matriz de combinaciones */
+  .jose-matrix-wrap { overflow-x: auto; }
+  .jose-matrix { width: auto; border-collapse: separate; border-spacing: 3px; font-size: 0.8125rem; font-family: var(--semantic-font-family-primary); }
+  .jose-matrix th { font-family: inherit; border: 0; font-weight: 500; text-align: start; white-space: nowrap; padding-inline-end: 0.5rem; }
+  .jose-matrix thead th { padding: 0; vertical-align: bottom; }
+  .jose-matrix__head { display: grid; justify-items: center; gap: 0.25rem; width: 2.5rem; }
+  .jose-matrix__head span:first-child { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
+  .jose-matrix td { border: 0; padding: 0; width: 2.5rem; height: 2.5rem; text-align: center; background: var(--jose-ground-alt); border-radius: 0.25rem; }
+  .jose-matrix tbody th { position: sticky; left: 0; z-index: 1; background: var(--jose-ground); }
+  .jose-matrix tr:hover td, .jose-matrix td.is-col { outline: 1px solid var(--jose-line); }
+  .jose-chip { display: inline-block; width: 1.1rem; height: 1.1rem; border-radius: 0.2rem; background: var(--jose-c); border: 1px solid var(--jose-line); vertical-align: middle; margin-inline-end: 0.4rem; }
+  .jose-mark { display: inline-grid; place-items: center; width: 1rem; height: 1rem; border-radius: 50%; font-weight: 700; line-height: 1; vertical-align: middle; }
+  .jose-mark--2 { background: var(--jose-ink); }
+  .jose-mark--1 { width: 0.55rem; height: 0.55rem; background: var(--jose-ink-soft); }
+  .jose-mark--0 { color: var(--jose-accent); font-size: 1.1rem; }
+  .jose-mark--t { color: var(--jose-ink-soft); }
+  .jose-pair { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .jose-pair__item { display: grid; gap: 0.25rem; justify-items: center; width: 4.5rem; font-size: 0.75rem; text-align: center; }
+  .jose-pair__duo { display: flex; width: 4.5rem; height: 3rem; border-radius: 0.375rem; overflow: hidden; border: 1px solid var(--jose-line); }
+  .jose-pair__duo span { flex: 1; background: var(--jose-c); }
+  .jose-formula__bar { display: flex; height: 4rem; border-radius: 0.375rem; overflow: hidden; border: 1px solid var(--jose-line); }
+  .jose-formula__bar span { background: var(--jose-c); }
+
+  /* syx-reuse: checked atom-table, mol-card (no tienen una fila de muestra de color por prenda) — conjunto por prenda */
+  .jose-outfit { display: grid; grid-template-columns: 3.75rem minmax(0, 1fr); gap: 0.3rem 0.5rem; align-items: center; }
+  .jose-outfit__role { font-size: 0.8125rem; font-weight: 500; color: var(--jose-ink-soft); }
+  .jose-outfit__bar { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 0.5rem; min-height: 2.25rem; padding: 0.35rem 0 0.35rem 2.5rem; font-size: 0.875rem; line-height: 1.3; align-content: center; }
+  .jose-outfit__bar::before { content: ""; position: absolute; inset: 0.25rem auto 0.25rem 0; width: 1.875rem; border-radius: 0.25rem; background: var(--jose-c); box-shadow: inset 0 0 0 1px var(--jose-line); }
+    .jose-outfit__bar span:first-child { flex: 1 1 7rem; }
+  .jose-outfit__bar span:last-child { color: var(--jose-ink-soft); }
+  .jose-price { text-align: end; white-space: nowrap; font-size: 1rem; font-variant-numeric: tabular-nums; }
+  .jose-note { color: var(--jose-ink-soft); font-size: 0.875rem; }
+  .jose-foot { padding-block: var(--jose-band-pad); font-size: 0.875rem; color: var(--jose-ink-soft); border-block-start: 1px solid var(--jose-line); }
+  .jose-combo { transition: opacity var(--jose-duration) var(--jose-easing); }
+  /* hover: la ficha con enlace sube 2px, la foto se acerca 1.03 dentro de su marco (translate/scale sueltos: GSAP usa transform) */
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .jose-cols > article:has(a) { transition: translate 0.25s var(--jose-easing); }
+    .jose-cols > article:has(a):hover { translate: 0 -2px; }
+    .jose-combo .mol-card__media img, .jose-look__pic img { transition: scale 0.6s var(--jose-easing); }
+    .jose-combo:hover .mol-card__media img, .jose-look__pic:hover img { scale: 1.03; }
+  }
+  @media (prefers-reduced-motion: reduce) { .jose-combo { transition: none; } }
+  /* tablas apiladas: base móvil; desde 37.5em (phablet en $syx-breakpoints) vuelven a ser tabla */
+  .jose-stack thead { display: none; }
+  .jose-stack tr { display: grid; padding-block: 0.6rem; border-block-end: 1px solid var(--jose-line); }
+  .jose-stack td { display: block; border: 0; padding: 0.15rem 0; text-align: start; }
+  .jose-stack td::before { content: attr(data-l); display: block; font-size: 0.75rem; color: var(--jose-ink-soft); }
+  .jose-stack td:empty { display: none; }
+  .jose-stack .atom-table { min-width: 0; }
+  @media (min-width: 37.5em) {
+    .jose-stack thead { display: table-header-group; }
+    .jose-stack tr { display: table-row; padding-block: 0; border-block-end: 0; }
+    .jose-stack td { display: table-cell; border: revert-layer; padding: revert-layer; }
+    .jose-stack td.jose-price { text-align: end; }
+    .jose-stack td::before { content: none; }
+    .jose-stack td:empty { display: table-cell; }
+  }
+}
+</style>
+</head>
+<body>
+
+<nav class="jose-nav" aria-label="Secciones">
+  <span class="jose-progress" aria-hidden="true"></span>
+  <div class="jose-wrap jose-nav__row">
+    <strong>Estilo de Jose</strong>
+    <a class="atom-link" href="#perfil">Perfil</a>
+    <a class="atom-link" href="#paleta">Paleta</a>
+    <a class="atom-link" href="#color">Qué va con qué</a>
+    <a class="atom-link" href="#looks">Looks</a>
+    <a class="atom-link" href="#combinaciones">Combinaciones</a>
+    <a class="atom-link" href="#mas-looks">Con producto</a>
+    <a class="atom-link" href="#clarks">Clarks</a>
+    <a class="atom-link" href="#reiss">Reiss</a>
+    <a class="atom-link" href="#sofisticado">Sofisticado</a>
+    <a class="atom-link" href="#gafas">Gafas</a>
+    <a class="atom-link" href="#compra">Compra</a>
+    <a class="atom-link" href="#arreglo">Arreglo</a>
+  </div>
+</nav>
+
+<header class="jose-band jose-band--hero jose-hero">
+  <div class="jose-wrap jose-grid jose-hero__grid">
+    <p class="jose-hero__kicker">Otoño-invierno 2026 · Guía personal</p>
+    <h1 class="atom-title atom-title--h1 jose-hero__title" data-split>Casual elegante estructurado, en tonos profundos</h1>
+    <figure class="jose-hero__pic">
+      <img src="img/look1.jpg" alt="Tablero ilustrado: americana marino, cuello alto crudo, pantalón de franela gris carbón y chukkas de ante marrón" width="720" height="1500">
+    </figure>
+    <div class="jose-hero__text">
+      <p class="atom-txt jose-lead">Tu guía de estilo en una página: qué colores te sientan, por qué, combinaciones con producto, y la lista de compra con enlaces.</p>
+      <div class="mol-btn-group syx-mt-4">
+        <a class="atom-btn atom-btn--secondary atom-btn--filled" href="#combinaciones">Ver las combinaciones</a>
+        <a class="atom-btn atom-btn--tertiary" href="#compra">Lista de compra</a>
+      </div>
+    </div>
+    <div class="jose-stats">
+      <div class="jose-fig"><span class="jose-fig__n">Medio-alto</span><span class="jose-fig__l">Tu contraste personal</span></div>
+      <div class="jose-fig"><span class="jose-fig__n">70/20/10</span><span class="jose-fig__l">Base, apoyo y acento</span></div>
+      <div class="jose-fig"><span class="jose-fig__n">6–10 mm</span><span class="jose-fig__l">Barba corta y uniforme</span></div>
+      <div class="jose-fig"><span class="jose-fig__n">≈1.250 €</span><span class="jose-fig__l">Dos looks completos, versión asequible</span></div>
+    </div>
+  </div>
+  <div class="jose-hero__strip" aria-hidden="true"><span style="--jose-c:#1d2a4a"></span><span style="--jose-c:#2b3f66"></span><span style="--jose-c:#1f4d5a"></span><span style="--jose-c:#1f3d2e"></span><span style="--jose-c:#5b5e3a"></span><span style="--jose-c:#4a2e22"></span><span style="--jose-c:#9c4a33"></span><span style="--jose-c:#b98a57"></span><span style="--jose-c:#cdb48a"></span><span style="--jose-c:#ece6d8"></span><span style="--jose-c:#85878c"></span><span style="--jose-c:#3d3f45"></span><span style="--jose-c:#5e1f2a"></span></div>
+</header>
+
+<main>
+<section class="jose-band" id="perfil">
+  <div class="jose-wrap">
+    <header class="jose-grid jose-head">
+      <h2 class="atom-title atom-title--h2" data-split>Tu perfil, en cuatro rasgos</h2>
+      <p class="atom-txt jose-lead">Cada rasgo trae una consecuencia práctica. Es criterio estético, no una regla cerrada: la base asesor-moda recuerda que no hay estudios que validen recomendaciones por forma de rostro.</p>
+    </header>
+    <div class="jose-cols syx-mt-4" id="rasgos"></div>
+  </div>
+</section>
+
+<section class="jose-band jose-band--alt" id="paleta">
+  <div class="jose-wrap">
+    <header class="jose-grid jose-head">
+      <h2 class="atom-title atom-title--h2" data-split>Tu paleta: profunda, con calidez</h2>
+      <p class="atom-txt jose-lead">Tonos profundos cerca de la cara mantienen el contraste que las canas van rebajando. Reparte el armario así:</p>
+    </header>
+    <div class="jose-bar" role="img" aria-label="70 % base, 20 % apoyo, 10 % acento">
+      <span style="--jose-c:oklch(0.31 0.07 262);width:70%">Base 70 %</span>
+      <span style="--jose-c:oklch(0.42 0.06 125);width:20%">Apoyo 20 %</span>
+      <span style="--jose-c:oklch(0.36 0.11 15);width:10%">10 %</span>
+    </div>
+    <div id="paletas"></div>
+    <div class="mol-alert mol-alert--warning syx-mt-4" role="note">
+      <div class="mol-alert__body"><p class="mol-alert__title">Evita junto a la cara</p>
+      <p>Blanco óptico (mejor crudo o blanco roto), beiges y amarillos pálidos que apagan, flúor y pastel helado. La colorimetría se estimó con luz interior: confírmala probándote las prendas a luz natural.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="jose-band" id="color">
+  <div class="jose-wrap">
+    <header class="jose-grid jose-head">
+      <h2 class="atom-title atom-title--h2" data-split>Qué color va con qué</h2>
+      <p class="atom-txt jose-lead">Toca un color para ver con cuáles queda mejor. Debajo tienes la tabla completa y diez fórmulas por prenda para no pensar.</p>
+    </header>
+    <div class="mol-btn-group syx-mt-3" id="cp-chips" role="group" aria-label="Elige un color"></div>
+    <div class="jose-cols syx-mt-3" id="cp-result" aria-live="polite"></div>
+    <h3 class="atom-title atom-title--h3 syx-mt-5">Fórmulas por prenda</h3>
+    <p class="jose-note syx-mb-2">Qué color va arriba, abajo, en los pies y de acento. Copia la fórmula con las prendas que ya tengas.</p>
+    <div class="jose-cols jose-cols--two" id="cp-formulas"></div>
+    <h3 class="atom-title atom-title--h3 syx-mt-5">La tabla completa</h3>
+    <p class="jose-note syx-mb-2"><span class="jose-mark jose-mark--2" aria-hidden="true"></span> Combinan muy bien &nbsp; <span class="jose-mark jose-mark--1" aria-hidden="true"></span> Funcionan &nbsp; <span class="jose-mark jose-mark--0" aria-hidden="true">×</span> Mejor evitar &nbsp; <span class="jose-mark jose-mark--t" aria-hidden="true">=</span> Mismo color (tono sobre tono)</p>
+    <div class="jose-matrix-wrap"><table class="jose-matrix" id="cp-matrix"></table></div>
+    <p class="jose-note syx-mt-3">Criterio estético aplicado a tu contraste medio-alto y tu piel neutro-cálida (FUN-006, COL-003, CUE-007); no es una regla cerrada. Lo que se marca para evitar son pares que compiten entre sí o se apagan juntos cerca de la cara.</p>
+  </div>
+</section>
+
+<section class="jose-band jose-band--alt" id="looks">
+  <div class="jose-wrap">
+    <header class="jose-grid jose-head">
+      <h2 class="atom-title atom-title--h2" data-split>Dos looks de base</h2>
+      <p class="atom-txt jose-lead">Uno para trabajar, otro para el fin de semana. De aquí salen casi todas las combinaciones.</p>
+    </header>
+    <div class="mol-tabs syx-mt-3">
+      <div class="mol-tabs__list" role="tablist" aria-label="Looks">
+        <button class="mol-tabs__tab" role="tab" id="tab-l1" aria-controls="panel-l1" aria-selected="true" type="button">Oficina: marino, crudo y carbón</button>
+        <button class="mol-tabs__tab" role="tab" id="tab-l2" aria-controls="panel-l2" aria-selected="false" tabindex="-1" type="button">Fin de semana: oliva, camel y denim</button>
+      </div>
+      <div class="mol-tabs__panel" role="tabpanel" id="panel-l1" aria-labelledby="tab-l1"></div>
+      <div class="mol-tabs__panel" role="tabpanel" id="panel-l2" aria-labelledby="tab-l2" hidden></div>
+    </div>
+  </div>
+</section>
+
+<section class="jose-band" id="combinaciones">
+  <div class="jose-wrap">
+    <header class="jose-grid jose-head">
+      <h2 class="atom-title atom-title--h2" data-split>Ocho combinaciones para tu armario</h2>
+      <p class="atom-txt jose-lead">Máximo tres colores y un acento, marrón en calzado y cinturón, sin logos, pantalón recto de tiro medio con quiebre ligero.</p>
+    </header>
+    <div class="mol-btn-group syx-mt-3" id="filtros" role="group" aria-label="Filtrar por ocasión"></div>
+    <div class="jose-cols syx-mt-4" id="combos"></div>
+  </div>
+</section>
+
+<section class="jose-band jose-band--alt" id="mas-looks">
+  <div class="jose-wrap">
+    <header class="jose-grid jose-head">
+      <h2 class="atom-title atom-title--h2" id="ml-title">32 combinaciones más, con producto</h2>
+      <p class="atom-txt jose-lead">Cada prenda es un producto concreto que se vende en España, con su enlace. <span id="ml-intro"></span> Debajo de cada producto verás, cuando la hay, otra opción de Massimo Dutti, Sepiia, Uniqlo o Reiss.</p>
+    </header>
+    <div class="jose-figures syx-mt-3">
+      <div class="atom-stat"><span class="atom-stat__number" id="ml-np"></span><span class="atom-stat__label">Prendas distintas en total</span></div>
+      <div class="atom-stat"><span class="atom-stat__number" id="ml-min"></span><span class="atom-stat__label">La combinación más económica</span></div>
+      <div class="atom-stat atom-stat--accent"><span class="atom-stat__number" id="ml-max"></span><span class="atom-stat__label">La más cara, comprada entera</span></div>
+    </div>
+    <div class="mol-btn-group syx-mt-4" id="ml-filtros" role="group" aria-label="Filtrar por ocasión"></div>
+    <div class="jose-cols jose-cols--wide syx-mt-4" id="ml-combos"></div>
+    <div class="mol-alert mol-alert--info syx-mt-4" role="note"><div class="mol-alert__body"><p>Precios y stock consultados en cada web el 25/11/2026; no está comprobada tu talla. Algunas rebajas (Charles Tyrwhitt, Ecco) pueden acabar pronto. El chaleco de Charles Tyrwhitt solo quedaba en talla L, y en la ficha de las Ecco Soft 60 el color no estaba claro: elige blanco al comprar. El blazer Brera es de seda, lino y lana: es más de entretiempo que de pleno invierno. Uniqlo y Sepiia: precio del listado de la tienda. Reiss: stock no comprobado en la ficha. Massimo Dutti no deja leer sus fichas de producto, así que el enlace va a la sección de pantalones de pana (elige el marrón) y el color disponible no está comprobado.</p></div></div>
+  </div>
+</section>
+
+<section class="jose-band" id="clarks">
+  <div class="jose-wrap">
+    <header class="jose-grid jose-head">
+      <h2 class="atom-title atom-title--h2" data-split>Clarks que te favorecen</h2>
+      <p class="atom-txt jose-lead">Tu regla es marrón en el calzado. En Clarks eso significa Desert Boot o Wallabee en ante oscuro (chocolate, tabaco, cola u oliva) sobre suela de crepe. Encajan con chinos, franela y vaqueros, y no compiten con tu cara.</p>
+    </header>
+    <div class="jose-cols jose-cols--five syx-mt-4">
+      <article class="mol-card"><div class="mol-card__body"><div class="jose-swatch__chip" style="--jose-c:#6a4a35"></div><p class="jose-kicker syx-mt-3">Mi primera opción</p><h3 class="mol-card__title atom-title atom-title--h4 syx-mt-2">Desert Boot · Brown Suede</h3><p class="jose-note">Ante marrón medio-oscuro sin forro, suela de crepe.</p><p class="atom-txt syx-mt-2">Es el marrón de tu paleta de otoño profundo: calienta sin apagar tu contraste. Va con chino oliva o marino, vaquero índigo, franela gris y jersey burdeos.</p><p class="jose-ml__total syx-mt-3"><a class="atom-link" href="https://www.clarks.com/en-es/desert-boot/26188310-p" target="_blank" rel="noopener">Ver en Clarks España</a><span class="jose-price"><strong>117 €</strong> <s class="jose-note">130 €</s></span></p></div></article>
+      <article class="mol-card"><div class="mol-card__body"><div class="jose-swatch__chip" style="--jose-c:#8a5a2b"></div><p class="jose-kicker syx-mt-3">Más arreglada</p><h3 class="mol-card__title atom-title atom-title--h4 syx-mt-2">Desert Boot · Beeswax</h3><p class="jose-note">Piel encerada color miel-tabaco, forro de piel, suela de crepe.</p><p class="atom-txt syx-mt-2">Aguanta mejor la lluvia que el ante y pasa por oficina informal. Úsala con chino marino o gris carbón y americana de tweed.</p><p class="jose-ml__total syx-mt-3"><a class="atom-link" href="https://www.clarks.com/en-es/desert-boot/26155484-p" target="_blank" rel="noopener">Ver en Clarks España</a><span class="jose-price"><strong>117 €</strong> <s class="jose-note">130 €</s></span></p></div></article>
+      <article class="mol-card"><div class="mol-card__body"><div class="jose-swatch__chip" style="--jose-c:#6e3f2a"></div><p class="jose-kicker syx-mt-3">Más cálida</p><h3 class="mol-card__title atom-title atom-title--h4 syx-mt-2">Desert Boot · Cola Suede</h3><p class="jose-note">Ante tabaco rojizo, forro de piel, suela de crepe.</p><p class="atom-txt syx-mt-2">El tono rojizo va muy bien con verde botella, burdeos, crudo y camel. Es la más otoñal de las tres.</p><p class="jose-ml__total syx-mt-3"><a class="atom-link" href="https://www.clarks.com/en-es/desert-boot/26155481-p" target="_blank" rel="noopener">Ver en Clarks España</a><span class="jose-price"><strong>120 €</strong></span></p></div></article>
+      <article class="mol-card"><div class="mol-card__body"><div class="jose-swatch__chip" style="--jose-c:#4a2e22"></div><p class="jose-kicker syx-mt-3">Para invierno</p><h3 class="mol-card__title atom-title atom-title--h4 syx-mt-2">Desert Boot Torhill DB · Dark Brown Suede</h3><p class="jose-note">Ante chocolate, suela de goma con dibujo.</p><p class="atom-txt syx-mt-2">Es el marrón más oscuro, el que más contraste te da. La suela de goma agarra mejor en mojado que el crepe. Quedaba 1 unidad.</p><p class="jose-ml__total syx-mt-3"><a class="atom-link" href="https://tascon.es/en/products/clarks-desert-boot-male-torhill-db-dark-brown-suede-dark-brown-suede-26173467" target="_blank" rel="noopener">Ver en Tascon</a><span class="jose-price"><strong>Precio no visible</strong></span></p></div></article>
+      <article class="mol-card"><div class="mol-card__body"><div class="jose-swatch__chip" style="--jose-c:#5b5e3a"></div><p class="jose-kicker jose-kicker--warn syx-mt-3">Ganga, pocas tallas</p><h3 class="mol-card__title atom-title atom-title--h4 syx-mt-2">Wallabee · Olive suede</h3><p class="jose-note">Ante oliva, suela de crepe.</p><p class="atom-txt syx-mt-2">El oliva oscuro es de tu paleta y va con marino, crudo y chocolate. Solo quedaban tallas 35,5 a 38: si no es la tuya, búscalo en otra tienda.</p><p class="jose-ml__total syx-mt-3"><a class="atom-link" href="https://www.urbanoutfitters.com/es-es/shop/clarks-originals-olive-wallabee-suede-shoes2" target="_blank" rel="noopener">Ver en Urban Outfitters</a><span class="jose-price"><strong>75 €</strong> <s class="jose-note">125 €</s></span></p></div></article>
+    </div>
+    <h3 class="atom-title atom-title--h4 syx-mt-4">Mejor evitar</h3>
+    <ul class="jose-garments jose-dash syx-mt-2">
+      <li><span><strong>Arena o beige claro (Sand Suede):</strong> es el Clarks más típico, pero te resta contraste y se ensucia enseguida.</span></li>
+      <li><span><strong>Negro:</strong> endurece tu paleta cálida y no casa con el crepe.</span></li>
+      <li><span><strong>Ginger Suede (171 €):</strong> naranja claro y caro para lo que es; el Cola da la calidez sin el naranja.</span></li>
+      <li><span><strong>Desert Boot Evo:</strong> en España se vende como modelo de mujer y en colores claros.</span></li>
+    </ul>
+    <div class="mol-alert mol-alert--info syx-mt-4" role="note"><div class="mol-alert__body"><p>Precios de Clarks España con descuento de Black Friday, consultados el 25/11/2026; la talla no está comprobada. Las fichas de Desert Trek y Desert Trek GTX no se pudieron leer (la web redirigía a la portada), así que no aparecen. El Desert Boot suele hormar algo grande: pruébatelo antes o pide medio número menos.</p></div></div>
+  </div>
+</section>
+
+<section class="jose-band jose-band--alt" id="reiss">
+  <div class="jose-wrap">
+    <header class="jose-grid jose-head">
+      <h2 class="atom-title atom-title--h2" data-split>Reiss que te favorece</h2>
+      <p class="atom-txt jose-lead">Reiss corta entallado y trabaja bien los tonos apagados de tu paleta: marino, chocolate, oliva, camel y burdeos. Lo más rentable ahora son las chaquetas y americanas rebajadas; el punto de merino está a precio completo.</p>
+    </header>
+    <div class="jose-cols jose-cols--wide syx-mt-4">
+      <article class="mol-card"><div class="mol-card__body"><p class="jose-kicker jose-kicker--warn">Rebajado, la mejor compra</p><p class="jose-note syx-mt-2 syx-mb-3">Precio de outlet en Reiss: lo que más merece la pena ahora.</p><ul class="jose-ml__items"><li><span class="jose-dot" style="--jose-c:#1d2a4a"></span><span><a class="atom-link" href="https://www.reiss.com/es/es/style/sv072288/g25622" target="_blank" rel="noopener">Camisa de lana merino abotonada</a><br><small class="jose-note">Marino. Hace de camisa y de jersey fino bajo la americana.</small></span><span class="jose-price">63 €<br><small class="jose-note"><s>130 €</s></small></span></li><li><span class="jose-dot" style="--jose-c:#1d2a4a"></span><span><a class="atom-link" href="https://www.reiss.com/es/es/style/su986650/v42694" target="_blank" rel="noopener">Americana de cuadros en lana con lino</a><br><small class="jose-note">Marino. Cuadro discreto para chino crudo o vaquero.</small></span><span class="jose-price">113 €<br><small class="jose-note"><s>385 €</s></small></span></li><li><span class="jose-dot" style="--jose-c:#1d2a4a"></span><span><a class="atom-link" href="https://www.reiss.com/es/es/style/sv046250/g98910" target="_blank" rel="noopener">Bomber técnica abotonada</a><br><small class="jose-note">Marino. Chaqueta de diario para fin de semana.</small></span><span class="jose-price">126 €<br><small class="jose-note"><s>255 €</s></small></span></li><li><span class="jose-dot" style="--jose-c:#1d2a4a"></span><span><a class="atom-link" href="https://www.reiss.com/es/es/style/su889122/v20330" target="_blank" rel="noopener">Chaqueta de cuatro bolsillos en lana</a><br><small class="jose-note">Marino. Estilo field jacket, sustituye al blazer en lo informal.</small></span><span class="jose-price">229 €<br><small class="jose-note"><s>475 €</s></small></span></li><li><span class="jose-dot" style="--jose-c:#4a2e22"></span><span><a class="atom-link" href="https://www.reiss.com/es/es/style/sv076152/v79129" target="_blank" rel="noopener">Blazer cruzado de cuadros, corte clásico</a><br><small class="jose-note">Chocolate. El cruzado ensancha el torso y equilibra un rostro alargado.</small></span><span class="jose-price">256 €<br><small class="jose-note"><s>515 €</s></small></span></li><li><span class="jose-dot" style="--jose-c:#5b5e3a"></span><span><a class="atom-link" href="https://www.reiss.com/es/es/style/su962823/w16006" target="_blank" rel="noopener">Chaqueta de ante con cremallera</a><br><small class="jose-note">Verde oliva. Pieza de inversión: ante oliva sobre jersey crudo o chocolate.</small></span><span class="jose-price">320 €<br><small class="jose-note"><s>515 €</s></small></span></li></ul></div></article>
+      <article class="mol-card"><div class="mol-card__body"><p class="jose-kicker">Punto de merino</p><p class="jose-note syx-mt-2 syx-mb-3">Precio completo. El polo de punto enmarca la cara mejor que el cuello redondo.</p><ul class="jose-ml__items"><li><span class="jose-dot" style="--jose-c:#5e1f2a"></span><span><a class="atom-link" href="https://www.reiss.com/es/es/style/sv263939/y56447" target="_blank" rel="noopener">Polo de manga larga de merino</a><br><small class="jose-note">Burdeos. Tu acento por excelencia, con marino o gris.</small></span><span class="jose-price">130 €</span></li><li><span class="jose-dot" style="--jose-c:#5b5e3a"></span><span><a class="atom-link" href="https://www.reiss.com/es/es/style/sv263939/v79112" target="_blank" rel="noopener">Polo de manga larga de merino</a><br><small class="jose-note">Verde oliva suave. Con chino crudo y Desert Boot marrón.</small></span><span class="jose-price">130 €</span></li><li><span class="jose-dot" style="--jose-c:#b98a57"></span><span><a class="atom-link" href="https://www.reiss.com/es/es/style/sv263939/v79111" target="_blank" rel="noopener">Polo de manga larga de merino</a><br><small class="jose-note">Marrón camel. Cálido junto a la cara, con pantalón marino.</small></span><span class="jose-price">130 €</span></li><li><span class="jose-dot" style="--jose-c:#1d2a4a"></span><span><a class="atom-link" href="https://www.reiss.com/es/es/style/sv263939/120997" target="_blank" rel="noopener">Polo de manga larga de merino</a><br><small class="jose-note">Marino. El básico que va con todo.</small></span><span class="jose-price">130 €</span></li><li><span class="jose-dot" style="--jose-c:#4a2e22"></span><span><a class="atom-link" href="https://www.reiss.com/es/es/style/su666683/f72420" target="_blank" rel="noopener">Polo de cuello abierto de merino</a><br><small class="jose-note">Chocolate. Cuello abierto en V: alarga menos que un cuello alto cerrado.</small></span><span class="jose-price">130 €</span></li></ul></div></article>
+      <article class="mol-card"><div class="mol-card__body"><p class="jose-kicker">Pantalón y sobrecamisa</p><p class="jose-note syx-mt-2 syx-mb-3">Las sobrecamisas ya salen en tus combinaciones con producto.</p><ul class="jose-ml__items"><li><span class="jose-dot" style="--jose-c:#1d2a4a"></span><span><a class="atom-link" href="https://www.reiss.com/es/en/style/sv179404/159231" target="_blank" rel="noopener">Chino tailored de algodón elástico</a><br><small class="jose-note">Marino. Corte recto, ni pitillo ni ancho.</small></span><span class="jose-price">155 €</span></li><li><span class="jose-dot" style="--jose-c:#ece6d8"></span><span><a class="atom-link" href="https://www.reiss.com/es/en/style/su975259/g69737" target="_blank" rel="noopener">Chino tailored de piqué de algodón</a><br><small class="jose-note">Crudo. Aclara la parte baja frente a punto oscuro arriba.</small></span><span class="jose-price">130 €</span></li><li><span class="jose-dot" style="--jose-c:#4a2e22"></span><span><a class="atom-link" href="https://www.reiss.com/es/es/style/sv056645/g20230" target="_blank" rel="noopener">Sobrecamisa de dos bolsillos</a><br><small class="jose-note">Marrón. Capa de entretiempo sobre camiseta crudo.</small></span><span class="jose-price">165 €</span></li><li><span class="jose-dot" style="--jose-c:#1d2a4a"></span><span><a class="atom-link" href="https://www.reiss.com/es/en/style/su919475/y36113" target="_blank" rel="noopener">Sobrecamisa de sarga de algodón</a><br><small class="jose-note">Marino.</small></span><span class="jose-price">102 €<br><small class="jose-note"><s>195 €</s></small></span></li><li><span class="jose-dot" style="--jose-c:#1f3d2e"></span><span><a class="atom-link" href="https://www.reiss.com/es/en/style/su896120/g10557" target="_blank" rel="noopener">Sobrecamisa acolchada</a><br><small class="jose-note">Verde oscuro. Abrigo ligero con chino crudo.</small></span><span class="jose-price">128 €<br><small class="jose-note"><s>220 €</s></small></span></li></ul></div></article>
+    </div>
+    <h3 class="atom-title atom-title--h4 syx-mt-4">Mejor evitar en Reiss</h3>
+    <ul class="jose-garments jose-dash syx-mt-2">
+      <li><span><strong>Negro y gris muy oscuro con negro:</strong> te endurecen; Reiss tiene mucho de ambos.</span></li>
+      <li><span><strong>Piedra y beige grisáceo (stone):</strong> apagados para tu piel; mejor crudo, que es más cálido.</span></li>
+      <li><span><strong>Corte slim en pantalón:</strong> elige tailored o recto, que equilibra mejor tu figura.</span></li>
+      <li><span><strong>Chaqueta de lino chocolate (120 €):</strong> buen precio, pero es de verano.</span></li>
+    </ul>
+    <div class="mol-alert mol-alert--info syx-mt-4" role="note"><div class="mol-alert__body"><p>Precios del listado de Reiss España consultados el 25/11/2026; la web no marcaba nada como Black Friday y las rebajas son de su outlet. Talla y stock no comprobados en cada ficha. Solo se revisó la primera página del outlet.</p></div></div>
+  </div>
+</section>
+
+<section class="jose-band" id="sofisticado">
+  <div class="jose-wrap">
+    <header class="jose-grid jose-head">
+      <h2 class="atom-title atom-title--h2" data-split>Versión sofisticada</h2>
+      <p class="atom-txt jose-lead">Mismos colores y cortes, con un acabado más alto: tejidos con textura (franela, merino, ante, pana), tono sobre tono, blazer cruzado, abrigo camel, cuello alto bajo americana y mocasín de ante en lugar de zapatilla. Elegante sin llamar la atención.</p>
+    </header>
+    <div class="jose-cols jose-cols--wide syx-mt-4" id="sof-combos"></div>
+    <h3 class="atom-title atom-title--h4 syx-mt-4">Los detalles que lo suben de nivel</h3>
+    <ul class="jose-garments jose-dash syx-mt-2">
+      <li><span><strong>Cinturón:</strong> del mismo tono y acabado que el zapato; con ante, cinturón de ante o piel mate.</span></li>
+      <li><span><strong>Reloj:</strong> esfera sencilla y correa de piel marrón o malla de acero; nada deportivo con americana.</span></li>
+      <li><span><strong>Pañuelo de bolsillo:</strong> que no repita el estampado de la americana; doblado recto o con picos sueltos, nunca a juego con la corbata.</span></li>
+      <li><span><strong>Calcetín:</strong> del color del pantalón, para alargar la pierna.</span></li>
+    </ul>
+    <div class="mol-alert mol-alert--info syx-mt-4" role="note"><div class="mol-alert__body"><p>Precios consultados el 25 y 26/11/2026. Calzado en tu talla 46: las chelsea y el mocasín tabaco de Charles Tyrwhitt la tenían; en el mocasín de Suitsupply no se pudo comprobar. El pañuelo de bolsillo está en la tienda internacional de Charles Tyrwhitt, en libras. Massimo Dutti no deja leer sus fichas: el enlace lleva a su sección de pana.</p></div></div>
+  </div>
+</section>
+
+<section class="jose-band jose-band--alt" id="gafas">
+  <div class="jose-wrap">
+    <header class="jose-grid jose-head">
+      <h2 class="atom-title atom-title--h2" data-split>Gafas que te favorecen</h2>
+      <p class="atom-txt jose-lead">Tu cara es alargada, con frente alta, mandíbula marcada y cejas oscuras y rectas. Te van monturas altas de acetato con presencia, en carey oscuro o verde: acortan el rostro, suavizan la mandíbula y repiten el contraste de tus cejas. Ordenadas de mejor a peor:</p>
+    </header>
+    <div class="jose-cols jose-cols--five syx-mt-4">
+      <article class="mol-card"><div class="mol-card__body"><div class="jose-swatch__chip" style="--jose-c:#5a3a24"></div><p class="jose-kicker syx-mt-3">Puesto 1</p><h3 class="mol-card__title atom-title atom-title--h4 syx-mt-2">Moscot Lemtosh</h3><p class="jose-note">Panto en acetato grueso · carey (Tortoise o Classic Havana)</p><p class="jose-note">Medidas: Tallas 46 o 49; la 44 mide 44/24/140 y 134 mm de ancho</p><p class="atom-txt syx-mt-2">La mejor para ti. Es alta y de acetato grueso: acorta el rostro alargado, su curva suaviza la mandíbula y el puente marcado corta la nariz. El carey oscuro tiene el mismo contraste que tus cejas sin el golpe del negro.</p><p class="jose-ml__total syx-mt-3"><a class="atom-link" href="https://moscot.com/en-es/products/lemtosh" target="_blank" rel="noopener">Ver en Moscot</a><span class="jose-price"><strong>350 €</strong></span></p></div></article>
+      <article class="mol-card"><div class="mol-card__body"><div class="jose-swatch__chip" style="--jose-c:#4f3322"></div><p class="jose-kicker syx-mt-3">Puesto 2</p><h3 class="mol-card__title atom-title atom-title--h4 syx-mt-2">Oliver Peoples Sheldrake</h3><p class="jose-note">Panto de acetato hecho en Japón · Tokyo Tortoise</p><p class="jose-note">Medidas: 49/22/145, alto de lente 41 mm (también 47/22, agotada)</p><p class="atom-txt syx-mt-2">Igual de favorecedora que la Lemtosh y con mejor acabado. El puente alto le va bien a tu nariz. En carey Cocobolo y Bark estaba agotada.</p><p class="jose-ml__total syx-mt-3"><a class="atom-link" href="https://www.oliverpeoples.com/en-us/products/0ov5036-1778" target="_blank" rel="noopener">Ver en Oliver Peoples</a><span class="jose-price"><strong>454 $</strong></span></p></div></article>
+      <article class="mol-card"><div class="mol-card__body"><div class="jose-swatch__chip" style="--jose-c:#6b4630"></div><p class="jose-kicker syx-mt-3">Puesto 3</p><h3 class="mol-card__title atom-title atom-title--h4 syx-mt-2">Oliver Peoples Finley Esq.</h3><p class="jose-note">Cuadrada suave de acetato · Cocobolo</p><p class="jose-note">Medidas: 51/20/145, alto de lente 43 mm; también 49/20</p><p class="atom-txt syx-mt-2">Muy alta (43 mm), así que acorta bien la cara, y su forma es más suave que la de las dos primeras. Elige el carey Cocobolo: el gris degradado es frío y claro para ti. En la tienda internacional figuraba agotada.</p><p class="jose-ml__total syx-mt-3"><a class="atom-link" href="https://www.oliverpeoples.com/en-row/products/0ov5298u-1003" target="_blank" rel="noopener">Ver en Oliver Peoples</a><span class="jose-price"><strong>414 $</strong></span></p></div></article>
+      <article class="mol-card"><div class="mol-card__body"><div class="jose-swatch__chip" style="--jose-c:#6b4428"></div><p class="jose-kicker syx-mt-3">Puesto 4</p><h3 class="mol-card__title atom-title atom-title--h4 syx-mt-2">Persol PO3007V</h3><p class="jose-note">Cuadrada alta de acetato · Habana</p><p class="jose-note">Medidas: 50/19/145, alto de lente 22 mm</p><p class="atom-txt syx-mt-2">Buena forma y mucha presencia; encaja con el casual elegante estructurado y con americana. Online estaba agotada en todos sus colores: pruébala en una óptica.</p><p class="jose-ml__total syx-mt-3"><a class="atom-link" href="https://www.persol.com/es-es/products/0po3007v-24" target="_blank" rel="noopener">Ver en Persol</a><span class="jose-price"><strong>230 €</strong></span></p></div></article>
+      <article class="mol-card"><div class="mol-card__body"><div class="jose-swatch__chip" style="--jose-c:#7a5233"></div><p class="jose-kicker syx-mt-3">Puesto 5</p><h3 class="mol-card__title atom-title atom-title--h4 syx-mt-2">Ray-Ban Clubmaster RX5154</h3><p class="jose-note">Browline: ceja de acetato y metal · Havana a rayas</p><p class="jose-note">Medidas: 53/21</p><p class="atom-txt syx-mt-2">La mejor relación calidad-precio. La barra superior marca la ceja y equilibra la frente alta. En la misma ficha hay una versión verde a rayas con plata. Quedaba 1 par de cada color.</p><p class="jose-ml__total syx-mt-3"><a class="atom-link" href="https://www.visiofactory.com/en/eyeglasses/all-eyeglass-frames/ray-ban-clubmaster-rx5154-rb5154-8375-53-21-striped-havana.html" target="_blank" rel="noopener">Ver en Visiofactory</a><span class="jose-price"><strong>74,93 €</strong> <s class="jose-note">99,90 €</s></span></p></div></article>
+    </div>
+    <h3 class="atom-title atom-title--h4 syx-mt-4">Cómo acertar con la talla</h3>
+    <ul class="jose-garments jose-dash syx-mt-2">
+      <li><span><strong>Ancho:</strong> igual que tu cara a la altura de las sienes; mide tus gafas actuales (los números de la varilla) y compara.</span></li>
+      <li><span><strong>Ceja:</strong> el borde superior la acompaña, sin taparla ni dejar una franja ancha debajo.</span></li>
+      <li><span><strong>Ojos:</strong> la pupila, centrada en la lente.</span></li>
+      <li><span><strong>Evita:</strong> el negro puro (endurece con las canas), las monturas estrechas y bajas (alargan la cara) y el metal muy fino.</span></li>
+    </ul>
+    <div class="mol-alert mol-alert--info syx-mt-4" role="note"><div class="mol-alert__body"><p>Precios consultados el 26/11/2026. Oliver Peoples no deja leer su tienda española: los precios son los de su web en dólares y en España pueden variar; el stock también cambia por país. El Persol estaba agotado en su web en todos sus colores. Descartadas: Moscot Miltzen, Ray-Ban Round Metal (fina y pequeña, te alarga la cara) y la Finley en gris degradado. Criterio: ficha ACC-004 de tu base de moda.</p></div></div>
+  </div>
+</section>
+
+<section class="jose-band" id="compra">
+  <div class="jose-wrap">
+    <header class="jose-grid jose-head">
+      <h2 class="atom-title atom-title--h2" data-split>Lista de compra</h2>
+      <p class="atom-txt jose-lead">Precios tal como estaban en cada web el 25/11/2026; la talla no está comprobada. Invierte en calzado y abrigo (cerca del 40 % del gasto) y no te saltes el sastre.</p>
+    </header>
+    <div class="jose-figures syx-mt-3">
+      <div class="atom-stat"><span class="atom-stat__number">≈1.250 €</span><span class="atom-stat__label">Versión asequible, dos looks</span></div>
+      <div class="atom-stat atom-stat--accent"><span class="atom-stat__number">≈2.240 €</span><span class="atom-stat__label">Con Crockett &amp; Jones y abrigo de camello</span></div>
+    </div>
+    <div class="mol-tabs syx-mt-4">
+      <div class="mol-tabs__list" role="tablist" aria-label="Lista por bloque" id="compra-tabs"></div>
+      <div id="compra-panels"></div>
+    </div>
+    <p class="jose-note syx-mt-3"><span class="atom-pill atom-pill--warning">Sin verificar</span> marca o modelo propuesto por criterio propio, sin precio confirmado. La base asesor-moda no recomienda marcas; solo indica dónde conviene invertir.</p>
+  </div>
+</section>
+
+<section class="jose-band jose-band--alt" id="arreglo">
+  <div class="jose-wrap">
+    <header class="jose-grid jose-head">
+      <h2 class="atom-title atom-title--h2" data-split>Pelo, barba y canas</h2>
+      <p class="atom-txt jose-lead">El arreglo hace el mismo trabajo que la ropa: ensanchar un rostro alargado y conservar el contraste.</p>
+    </header>
+    <div class="jose-cols syx-mt-4" id="arreglo-cards"></div>
+  </div>
+</section>
+</main>
+
+<footer class="jose-foot">
+  <div class="jose-wrap">
+    <p>Hecho con SYX (tema example-03 con tu paleta). Criterio de la base asesor-moda: FUN-006, CUE-003, CUE-006, CUE-007, ASE-001, ASE-002, ASE-008, ARM-003. Las ilustraciones son tableros orientativos, no fotos de producto.</p>
+  </div>
+</footer>
+
+<script>
+{
+const C = {marino:'#1d2a4a', crudo:'#ece6d8', carbon:'#3d3f45', chocolate:'#4a2e22', oliva:'#5b5e3a', camel:'#b98a57', burdeos:'#5e1f2a', petroleo:'#1f4d5a', arena:'#cdb48a', gris:'#85878c', indigo:'#2b3f66', roto:'#f0ebe0', botella:'#1f3d2e', terracota:'#9c4a33'};
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dot = k => `<span class="jose-dot" style="--jose-c:${C[k]}"></span>`;
+const $ = id => document.getElementById(id);
+
+const rasgos = [
+  ['Rostro alargado', 'Frente alta y mandíbula marcada.', ['Cuellos que ensanchan: cuello alto, cuello redondo, camisa de cuello abierto o italiano.', 'Monturas con algo de altura y puente horizontal marcado.', 'Pelo con volumen lateral, no tupé alto.']],
+  ['Contraste medio-alto', 'Pelo castaño muy oscuro y piel clara-media; las canas lo rebajan.', ['Marino, carbón, burdeos y verdes profundos cerca de la cara.', 'Crudo en vez de blanco óptico.', 'Un solo acento de color por conjunto.']],
+  ['Piel neutro-cálida, ojos avellana', 'Subtono oliva suave.', ['Te sientan oliva, camel, chocolate y petróleo.', 'Marrón en calzado y cinturón antes que negro.', 'Metales: acero cepillado o tonos cálidos.']],
+  ['Complexión delgada y definida', 'Hombros proporcionados, piernas más finas que el torso.', ['Texturas con cuerpo: franela, ante, lana hervida, punto.', 'Capas que suman anchura horizontal.', 'Pantalón recto de tiro medio, nunca pitillo.']]
+];
+$('rasgos').innerHTML = rasgos.map(([t, s, l]) => `<article class="mol-card mol-card--flat"><div class="mol-card__body"><h3 class="mol-card__title atom-title atom-title--h4">${esc(t)}</h3><p class="jose-note">${esc(s)}</p><ul class="jose-garments jose-dash syx-mt-2">${l.map(x => `<li><span>${esc(x)}</span></li>`).join('')}</ul></div></article>`).join('');
+
+const paletas = [
+  ['Base (70 %)', 'Lo que más se ve: americanas, pantalones, punto.', [['marino','Azul marino'],['carbon','Gris carbón'],['indigo','Índigo oscuro'],['crudo','Crudo'],['roto','Blanco roto']]],
+  ['Apoyo (20 %)', 'Sobrecamisas, abrigos, camisas de color.', [['oliva','Verde oliva'],['botella','Verde botella'],['petroleo','Azul petróleo'],['camel','Camel'],['chocolate','Marrón chocolate'],['arena','Arena']]],
+  ['Acento (10 %)', 'Una sola nota: bufanda, jersey o pañuelo.', [['burdeos','Burdeos'],['terracota','Terracota']]]
+];
+$('paletas').innerHTML = paletas.map(([t, s, cs]) => `<h3 class="atom-title atom-title--h4 syx-mt-4">${esc(t)}</h3><p class="jose-note syx-mb-2">${esc(s)}</p><div class="jose-swatches">${cs.map(([k, n]) => `<div class="jose-swatch"><div class="jose-swatch__chip" style="--jose-c:${C[k]}"></div><span>${esc(n)}</span></div>`).join('')}</div>`).join('');
+
+const looks = [
+  {id:'panel-l1', img:'img/look1.jpg', alt:'Tablero del look de oficina', intro:'Smart casual estructurado: la americana desestructurada eleva el conjunto sin corbata, y el cuello alto enmarca la cara y la barba.',
+   pal:[['marino','Azul marino'],['crudo','Crudo'],['carbon','Gris carbón'],['chocolate','Marrón chocolate']],
+   prendas:[['Americana','desestructurada de lana, marino, hombro natural'],['Cuello alto','merino fino de 12 galgas, crudo'],['Pantalón','franela gris carbón, recto, tiro medio, quiebre ligero'],['Botín chukka','ante marrón chocolate'],['Cinturón y reloj','piel marrón, acero cepillado']],
+   why:['El marino junto a la cara mantiene tu contraste medio-alto, que las canas tienden a bajar.','El cuello alto ensancha visualmente un rostro alargado y da un marco limpio a la barba.','Crudo en lugar de blanco óptico: ilumina sin endurecer tu piel neutro-cálida.','La franela y el ante dan textura y peso visual a una complexión delgada.'],
+   evita:'blanco óptico pegado a la cara, pantalón pitillo y zapatilla de running con americana.'},
+  {id:'panel-l2', img:'img/look2.jpg', alt:'Tablero del look de fin de semana', intro:'Casual elevado para el fin de semana en Madrid: capas de tonos profundos y una sola nota de color en la bufanda.',
+   pal:[['oliva','Verde oliva'],['camel','Camel'],['roto','Blanco roto'],['indigo','Índigo oscuro'],['burdeos','Burdeos (acento)']],
+   prendas:[['Abrigo','recto de lana camel, largo medio, sobre la rodilla'],['Sobrecamisa','lana o moleskin verde oliva, corte recto'],['Camiseta','algodón de buen gramaje, blanco roto, cuello redondo'],['Vaquero','índigo oscuro, recto o slim, sin rotos'],['Zapatilla','piel lisa blanco roto, suela fina'],['Bufanda','lana burdeos como único acento']],
+   why:['El oliva y el camel son tonos profundos y cálidos que sientan bien a tu piel y tus ojos marrones.','El burdeos cerca de la cara aporta el contraste que las canas van restando.','El cuello redondo y las capas suman anchura horizontal, buena para cara y cuerpo esbeltos.','Tres colores y un acento: menos es más.'],
+   evita:'colores flúor o pastel helado, sudadera con logo y vaquero desgastado.'}
+];
+for (const l of looks) {
+  $(l.id).innerHTML = `<div class="jose-look"><figure class="jose-look__pic" style="margin:0"><img src="${l.img}" alt="${esc(l.alt)}" width="720" height="1500" loading="lazy"></figure><div>
+  <p class="atom-txt jose-lead">${esc(l.intro)}</p>
+  <h3 class="atom-title atom-title--h5 syx-mt-4">Paleta del conjunto</h3><ul class="jose-garments syx-mt-2">${l.pal.map(([k, n]) => `<li>${dot(k)}<span>${esc(n)}</span></li>`).join('')}</ul>
+  <h3 class="atom-title atom-title--h5 syx-mt-4">Prendas</h3><ul class="jose-garments jose-dash syx-mt-2">${l.prendas.map(([a, b]) => `<li><span><strong>${esc(a)}</strong> ${esc(b)}</span></li>`).join('')}</ul>
+  <h3 class="atom-title atom-title--h5 syx-mt-4">Por qué te favorece</h3><div class="jose-why syx-mt-2">${l.why.map(w => `<p class="atom-txt syx-mb-2">${esc(w)}</p>`).join('')}</div>
+  <div class="mol-alert mol-alert--info syx-mt-3" role="note"><div class="mol-alert__body"><p><strong>Evita:</strong> ${esc(l.evita)}</p></div></div></div></div>`;
+}
+
+const CNAME = {marino:'Azul marino',carbon:'Gris carbón',gris:'Gris medio',indigo:'Índigo',crudo:'Crudo',roto:'Blanco roto',arena:'Arena',camel:'Camel',chocolate:'Chocolate',oliva:'Verde oliva',botella:'Verde botella',petroleo:'Azul petróleo',burdeos:'Burdeos',terracota:'Terracota'};
+const ORDER = ['Abrigo','Capa','Arriba','Debajo','Abajo','Zapatos','Acento'];
+const outfit = rows => `<div class="jose-outfit">${rows.slice().sort((a, b) => ORDER.indexOf(a[0]) - ORDER.indexOf(b[0])).map(([role, garment, c, opt]) => `<span class="jose-outfit__role">${esc(role)}</span><span class="jose-outfit__bar" style="--jose-c:${C[c]}"><span>${esc(garment)}</span><span>${esc(CNAME[c])}${opt ? ' · opcional' : ''}</span></span>`).join('')}</div>`;
+const combos = [
+  ['Trabajo','Reunión importante','Americana sin corbata: autoridad sin rigidez.',[['marino','Americana Havana marino'],['roto','Camisa oxford blanco roto, cuello italiano'],['carbon','Pantalón franela gris oscuro'],['chocolate','Chukka ante marrón y cinturón marrón']]],
+  ['Trabajo','Oficina diaria','El uniforme cómodo de diseñador que sigue pareciendo pensado.',[['marino','Polo de punto marino'],['arena','Chino arena, slim recto'],['roto','Zapatilla de piel blanco roto']]],
+  ['Trabajo','Oficina en invierno','Capas con textura: suman volumen a tu figura delgada.',[['oliva','Sobrecamisa lana hervida caqui (COS)'],['crudo','Cuello alto merino crudo'],['carbon','Pantalón franela gris oscuro'],['chocolate','Chukka ante marrón']]],
+  ['Casual','Fin de semana','Lo más simple, con tejidos buenos.',[['oliva','Sobrecamisa caqui abierta'],['roto','Camiseta blanco roto'],['indigo','Levi’s 501 lavado oscuro'],['roto','Zapatilla de piel blanco roto']]],
+  ['Casual','Paseo en frío','El burdeos cerca de la cara te devuelve contraste.',[['camel','Abrigo camel'],['burdeos','Jersey cuello redondo burdeos'],['indigo','Vaquero índigo oscuro'],['chocolate','Chukka ante marrón']]],
+  ['Más arreglado','Cena o evento','Impacto controlado: petróleo, gris y un toque burdeos.',[['marino','Americana Havana marino'],['petroleo','Camisa azul petróleo'],['gris','Pantalón franela gris medio'],['burdeos','Pañuelo de bolsillo burdeos'],['chocolate','Chukka ante o mocasín marrón']]],
+  ['Más arreglado','Noche de invierno','Monocromo cálido y elegante, sin corbata.',[['camel','Abrigo camel'],['crudo','Cuello alto merino crudo'],['carbon','Pantalón franela gris oscuro'],['chocolate','Chukka ante marrón']]],
+  ['Más arreglado','Cita o afterwork','Americana con punto: elegante y relajado a la vez.',[['marino','Americana Havana marino'],['crudo','Polo de punto crudo'],['indigo','Vaquero índigo oscuro'],['chocolate','Chukka ante marrón']]]
+];
+const ROLES8 = [['Capa','Arriba','Abajo','Zapatos'],['Arriba','Abajo','Zapatos'],['Capa','Arriba','Abajo','Zapatos'],['Capa','Arriba','Abajo','Zapatos'],['Abrigo','Arriba','Abajo','Zapatos'],['Capa','Arriba','Abajo','Acento','Zapatos'],['Abrigo','Arriba','Abajo','Zapatos'],['Capa','Arriba','Abajo','Zapatos']];
+const ACC8 = [['burdeos','Pañuelo de bolsillo'],['chocolate','Reloj con correa de piel'],['burdeos','Bufanda de lana'],['burdeos','Bufanda de lana'],['burdeos','Ya lo pone el jersey'],null,['chocolate','Bufanda de cachemir'],['burdeos','Calcetines de lana']];
+$('combos').innerHTML = combos.map(([cat, t, d, items], i) => `<article class="mol-card jose-combo" data-cat="${esc(cat)}"><div class="mol-card__media"><img src="img/combo${i + 1}.jpg" alt="Ilustración: ${esc(t)}" loading="lazy" width="560" height="890"></div><div class="mol-card__body"><p class="jose-kicker">${esc(cat)}</p><h3 class="mol-card__title atom-title atom-title--h4 syx-mt-2">${esc(t)}</h3><p class="jose-note syx-mb-2">${esc(d)}</p>${outfit(items.map(([k, n], j) => [ROLES8[i][j], n, k]).concat(ACC8[i] ? [['Acento', ACC8[i][1], ACC8[i][0], ACC8[i][1].startsWith('Ya') ? 0 : 1]] : []))}</div></article>`).join('');
+
+const cats = ['Todas', 'Trabajo', 'Casual', 'Más arreglado'];
+const filtros = $('filtros');
+const paintFilters = sel => {
+  filtros.innerHTML = cats.map(c => `<button type="button" class="atom-btn atom-btn--size-sm ${c === sel ? 'atom-btn--primary atom-btn--filled' : 'atom-btn--tertiary'}" aria-pressed="${c === sel}" data-cat="${esc(c)}">${esc(c)}</button>`).join('');
+  for (const card of document.querySelectorAll('.jose-combo')) card.hidden = !(sel === 'Todas' || card.dataset.cat === sel);
+};
+filtros.addEventListener('click', e => { const b = e.target.closest('button'); if (b) { paintFilters(b.dataset.cat); filtros.querySelector('[aria-pressed="true"]').focus(); } });
+paintFilters('Todas');
+
+
+const P = {
+  m1:['Pantalón slim fit de pana (elige marrón)','Massimo Dutti',59.95,0,'https://www.massimodutti.com/es/men/trousers/corduroy-n1654','chocolate'],
+  u1:['Chino slim fit, beige','Uniqlo',39.9,0,'https://www.uniqlo.com/es/es/products/E487209-000/00?colorDisplayCode=32','arena'],
+  u2:['Chino slim fit, verde oliva','Uniqlo',39.9,0,'https://www.uniqlo.com/es/es/products/E487209-000/00?colorDisplayCode=57','oliva'],
+  u4:['Jersey 100 % merino cuello polo, burdeos','Uniqlo',39.9,0,'https://www.uniqlo.com/es/es/products/E460939-000/00?colorDisplayCode=19','burdeos'],
+  u5:['Jersey 100 % merino cuello polo, marino','Uniqlo',39.9,0,'https://www.uniqlo.com/es/es/products/E460939-000/00?colorDisplayCode=69','marino'],
+  p1:['Camisa cuello kent, beige','Sepiia',76.9,109.9,'https://sepiia.com/products/camisa-casual-cuello-kent-hombre-beige-warm','arena'],
+  p3:['Work jacket Nova, azul marino','Sepiia',92.9,154.9,'https://sepiia.com/products/work-jacket-hombre-azul-marino-nova','marino'],
+  p4:['Chino slim Nova, marrón','Sepiia',90.9,129.9,'https://sepiia.com/products/pantalon-chino-hombre-marron-slim-nova','chocolate'],
+  r1:['Sobrecamisa de dos bolsillos, marrón','Reiss',165,0,'https://www.reiss.com/es/es/style/sv056645/g20230','chocolate'],
+  r3:['Sobrecamisa de sarga de algodón, marino','Reiss',102,195,'https://www.reiss.com/es/en/style/su919475/y36113','marino'],
+  r4:['Sobrecamisa acolchada, verde oscuro','Reiss',128,220,'https://www.reiss.com/es/en/style/su896120/g10557','botella'],
+  a1:['Camisa de franela de algodón, verde','Suitsupply',129,0,'https://suitsupply.com/es-es/men/shirts/camisa-de-franela-de-algodon-verde/H7419.html','botella'],
+  a2:['Camisa de franela de algodón, arena','Suitsupply',99,0,'https://suitsupply.com/es-es/men/shirts/camisa-de-franela-de-algodon-color-arena/H7223.html','arena'],
+  a3:['Camisa oxford lavada, verde oliva','Charles Tyrwhitt',37.5,74.95,'https://www.charlestyrwhitt.com/eu/es_ES/camisa-oxford-de-algod%C3%B3n-lavado-el%C3%A1stico---verde-oliva/CSC0058OLV.html','oliva'],
+  a4:['Camisa oxford lavada, azul oscuro','Charles Tyrwhitt',37.5,74.95,'https://www.charlestyrwhitt.com/eu/es_ES/camisa-oxford-lavada-el%C3%A1stica---azul-oscuro/CSC0043DBL.html','marino'],
+  a5:['Sobrecamisa vaquera, índigo','COS',129,0,'https://www.cos.com/es-es/men/menswear/coatsjackets/denim/product/denim-shirt-jacket-indigo-1327473001','indigo'],
+  a6:['Sobrecamisa de lana hervida, caqui oscuro','COS',119,0,'https://www.cos.com/es-es/men/menswear/shirts/cottonshirts/product/relaxed-boiled-wool-overshirt-dark-khaki-1304346001','oliva'],
+  k1:['Jersey de merino acanalado, marino','Suitsupply',129,0,'https://suitsupply.com/es-es/men/knitwear/navy-ribbed-merino-crewneck/KCV10007N01.html','marino'],
+  k2:['Polo de manga larga de merino acanalado, marino','Suitsupply',129,0,'https://suitsupply.com/es-es/men/knitwear/polo-de-manga-larga-acanalado-azul-marino-merino/KPL10031N01.html','marino'],
+  k3:['Jersey de cuello alto de merino, marino','Charles Tyrwhitt',74.95,99.95,'https://www.charlestyrwhitt.com/eu/es_ES/jersey-de-merino-de-cuello-alto---marino/KNJ0070NAV.html','marino'],
+  k4:['Jersey de merino de pico, burdeos','Charles Tyrwhitt',74.95,99.95,'https://www.charlestyrwhitt.com/eu/es_ES/jersey-de-merino-puro-con-cuello-en-v---burdeos/KNM0008BGD.html','burdeos'],
+  k5:['Camiseta AIRism de algodón, blanco roto','Uniqlo',24.9,0,'https://www.uniqlo.com/es/es/products/E465193-000/00?colorDisplayCode=16','roto'],
+  b1:['Chinos slim, verde medio','Suitsupply',119,0,'https://suitsupply.com/es-es/men/trousers/chinos-verde-intermedio-slim-leg-straight/B261702.html','oliva'],
+  b2:['Chinos slim, crudo','Suitsupply',119,0,'https://suitsupply.com/es-es/men/trousers/chinos-color-crudo-slim-leg-straight/B17059.html','crudo'],
+  b3:['Pantalón de franela, marino','Suitsupply',169,0,'https://suitsupply.com/es-es/men/trousers/pantalones-de-traje-azul-marino-straight-leg/B6904.html','marino'],
+  b4:['Pantalón de franela, gris oscuro','Suitsupply',169,0,'https://suitsupply.com/es-es/men/trousers/pantalones-de-traje-gris-oscuro-straight-leg/B6905.html','carbon'],
+  b5:['Pantalón de franela, gris medio','Suitsupply',169,0,'https://suitsupply.com/es-es/men/trousers/mid-grey-straight-leg-suit-trousers/B6906.html','gris'],
+  b6:['Vaquero 501 Original, lavado oscuro','Levi’s',70.4,110,'https://www.levi.com/ES/es_ES/ropa/hombre/vaqueros/jean-501-levis-original/p/005010162','indigo'],
+  j1:['Blazer Roma de lana, verde pata de gallo','Suitsupply',449,0,'https://suitsupply.com/es-es/men/jackets/americana-roma-relaxed-fit-en-espiga-verde/C25208.html','botella'],
+  j2:['Blazer Brera, marrón medio espiga','Suitsupply',449,0,'https://suitsupply.com/es-es/men/jackets/blazer-brera-marron-medio-de-punto-de-espiga-relaxed-fit./C261005.html','chocolate'],
+  j3:['Chaqueta camisa de lana, marrón oscuro','Suitsupply',249,0,'https://suitsupply.com/es-es/men/jackets/chaqueta-camisa-marron-oscuro-corte-relaxed/C25213.html','chocolate'],
+  j4:['Chaqueta camisa de lana, marino','Suitsupply',249,0,'https://suitsupply.com/es-es/men/jackets/chaqueta-camisa-azul-marino-corte-relaxed/C24212.html','marino'],
+  j5:['Bomber de pana, marrón oscuro','Suitsupply',279,0,'https://suitsupply.com/es-es/men/coats/chaqueta-bomber-de-pana-color-marron-oscuro/J1058.html','chocolate'],
+  j6:['Chaleco acolchado ligero, verde oliva','Charles Tyrwhitt',89,149,'https://www.charlestyrwhitt.com/eu/es_ES/chaleco-acolchado-ligero---verde-oliva/OUC0080OLV.html','oliva'],
+  j7:['Americana de lana ligera a cuadros, burdeos','Charles Tyrwhitt',199,349,'https://www.charlestyrwhitt.com/eu/es_ES/chaqueta-de-textura-de-lana-ligera-con-cuadro---burdeos/SEK0012BGD.html','burdeos'],
+  o1:['Abrigo de lana pura, camel claro','Charles Tyrwhitt',276.75,369,'https://www.charlestyrwhitt.com/eu/es_ES/abrigo-de-lana-pura---camel-claro/OUF0082LIC.html','camel'],
+  s1:['Botas chukka de ante, tabaco','Charles Tyrwhitt',129,199,'https://www.charlestyrwhitt.com/eu/es_ES/botas-chukka-de-ante---marr%C3%B3n-tabaco/SHS0009TBR.html','chocolate'],
+  s2:['Botas chelsea de ante, chocolate','Charles Tyrwhitt',149.25,199,'https://www.charlestyrwhitt.com/eu/es_ES/botas-chelsea-de-ante-con-suela-de-goma---marr%C3%B3n-chocolate/SHS0004CHC.html','chocolate'],
+  s3:['Mocasines de piel, marrón','Suitsupply',229,0,'https://suitsupply.com/es-es/men/shoes/mocasines-marrones/FW1369.html','chocolate'],
+  s4:['Zapatillas Campo de piel, White Liquor','Veja',140,0,'https://veja-store.com/en_eu/campo-leather-white-liquor-cp0503887a.html','roto'],
+  s5:['Zapatillas Soft 60 de piel (elige blanco)','Ecco',136,170,'https://www.boozt.com/eu/en/ecco/soft-60-m_32255972/226455548','roto'],
+  x1:['Bufanda de cachemir en espiga, burdeos','Charles Tyrwhitt',74.95,99.95,'https://www.charlestyrwhitt.com/eu/es_ES/bufanda-de-cachemir-en-espiga---rojo-burdeos/ACC0233MRN.html','burdeos'],
+  x2:['Bufanda de cachemir, marrón chocolate','Charles Tyrwhitt',74.95,99.95,'https://www.charlestyrwhitt.com/eu/es_ES/bufanda-de-cachemir---marr%C3%B3n-chocolate/ACC0235CHC.html','chocolate']
+};
+const ML = [
+  ['Trabajo','Reunión de lunes','La chaqueta camisa da estructura sin la formalidad de una americana; la franela arena calienta el marino.',['j4','a2','b4','s1']],
+  ['Trabajo','Verde y gris','El verde pata de gallo es tu tono de apoyo llevado a la americana; el cuello alto ensancha el rostro.',['j1','k3','b4','s2']],
+  ['Trabajo','Oficina tonal','Polo de punto y franela: cómodo, sin corbata y con un cuello que enmarca la barba.',['k2','b4','s3']],
+  ['Trabajo','Presentación a cliente','Americana con carácter y el resto calmado: camisa oscura y chino claro.',['j1','a4','b2','s3']],
+  ['Trabajo','Viernes en el estudio','Capas con textura sobre una base clara; zapatilla de piel lisa, no deportiva.',['a6','k1','b2','s4']],
+  ['Trabajo','Invierno largo','Marino cerca de la cara, marrón por encima y gris abajo: tres colores, ningún acento.',['k3','j3','b5','s2']],
+  ['Trabajo','Oxford y punto','El cuello de la oxford oliva asoma bajo el jersey marino; la franela aporta peso visual.',['a3','k1','b5','s1']],
+  ['Trabajo','Taller y reuniones','La pareja clásica de marrón y marino, con espiga para dar textura.',['j2','a4','b3','s3']],
+  ['Casual','Sábado de mercado','Denim por encima y verde abajo: casual con orden.',['a5','k5','b1','s4']],
+  ['Casual','Paseo por el Retiro','El chaleco suma anchura al torso; la franela arena ilumina sin blanco óptico.',['j6','a2','b6','s2']],
+  ['Casual','Pana y denim','Dos texturas de invierno y un jersey marino que mantiene el contraste.',['j5','k1','b6','s1']],
+  ['Casual','Verde sobre crudo','Camisa de franela abierta sobre camiseta: el tono profundo arriba, el claro abajo.',['a1','k5','b2','s4']],
+  ['Casual','Domingo con frío','Camel, marino e índigo, con la bufanda burdeos como único acento.',['o1','k1','b6','s2','x1']],
+  ['Casual','Cañas al sol de invierno','Oliva y marrón, dos tonos cálidos que te sientan bien, con vaquero oscuro.',['a3','j3','b6','s4']],
+  ['Casual','Escapada de fin de semana','Una chaqueta que hace de americana y de abrigo ligero, con chino verde.',['j4','k5','b1','s5']],
+  ['Casual','Tarde de librería','El burdeos cerca de la cara devuelve contraste; el cuello de la oxford lo enmarca.',['k4','a4','b2','s1']],
+  ['Más arreglado','Cena de invierno','La americana burdeos es el acento; todo lo demás, profundo y sobrio.',['j7','k3','b4','s3']],
+  ['Más arreglado','Teatro','Verde botella y burdeos: rico pero contenido, con gris oscuro de base.',['j1','k4','b4','s2']],
+  ['Más arreglado','Comida de entretiempo','Espiga marrón con franela marino y camisa clara: elegancia sin corbata.',['j2','a2','b3','s3']],
+  ['Más arreglado','Afterwork elegante','Chaqueta de lana marrón sobre punto marino; el mocasín sube un punto la formalidad.',['j3','k1','b5','s3']],
+  ['Más arreglado','Comida de Navidad','Capas de lana: abrigo camel, chaqueta marino y cuello alto, con bufanda chocolate.',['o1','j4','k3','b4','x2','s2']],
+  ['Más arreglado','Cita de noche','Cuello alto y pana: cálido, con textura y sin esfuerzo aparente.',['k3','j5','b4','s2']],
+  ['Más arreglado','Inauguración de diseño','Americana verde con camiseta y vaquero oscuro: mezcla de registros bien medida.',['j1','k5','b6','s4']],
+  ['Más arreglado','Cena con amigos','La americana burdeos relaja con polo de punto y chino crudo.',['j7','k2','b2','s3']],
+  ['Trabajo','Punto y pana','Merino marino y pana marrón: cálido, cómodo y con textura.',['u5','m1','s3']],
+  ['Trabajo','Sobrecamisa marrón','La sobrecamisa de Reiss hace de chaqueta; el cuello alto marino mantiene el contraste.',['r1','k3','b4','s2']],
+  ['Trabajo','Marino, beige y marrón','Todo Sepiia salvo los zapatos: tejidos técnicos que no se arrugan para días largos.',['p3','p1','p4','s3']],
+  ['Casual','Verde oscuro acolchado','Una capa con volumen que da anchura al torso, sobre básicos claros y vaquero.',['r4','k5','b6','s4']],
+  ['Casual','Básicos de Uniqlo','La combinación más económica: jersey burdeos cerca de la cara y chino beige.',['u4','u1','s1']],
+  ['Casual','Fin de semana ligero','Sobrecamisa marino rebajada, camiseta y chino oliva.',['r3','k5','u2','s5']],
+  ['Más arreglado','Blazer verde y pana','La americana verde sube el nivel; la pana marrón lo mantiene cálido.',['j1','u5','m1','s2']],
+  ['Más arreglado','Cena tranquila','Marrón por fuera, burdeos cerca de la cara y franela marino.',['r1','u4','b3','s3']]
+];
+const ROLE = id => ({a5:'Capa',a6:'Capa',o1:'Abrigo',m1:'Abajo',u1:'Abajo',u2:'Abajo',u4:'Arriba',u5:'Arriba',p1:'Arriba',p3:'Capa',p4:'Abajo',r1:'Capa',r3:'Capa',r4:'Capa'})[id] || ({a:'Arriba',k:'Arriba',b:'Abajo',j:'Capa',s:'Zapatos',x:'Acento'})[id[0]];
+const ALT = {k1:['u5'],k4:['u4'],a2:['p1'],j4:['r3','p3'],j3:['r1'],b1:['u2'],j6:['r4']};
+const ROLE_FIX = {6:{a3:'Debajo'},11:{a1:'Capa'},15:{a4:'Debajo'}};
+const ACC_DEF = {'Trabajo':['burdeos','Calcetines de lana'],'Casual':['burdeos','Bufanda de lana'],'Más arreglado':['burdeos','Pañuelo de bolsillo']};
+const mlRows = (cat, ids, i) => {
+  const rows = ids.map(id => [(ROLE_FIX[i] || {})[id] || ROLE(id), P[id][0].split(',')[0], P[id][5]]);
+  if (!rows.some(r => r[0] === 'Acento')) {
+    const own = rows.find(r => r[2] === 'burdeos');
+    rows.push(own ? ['Acento', 'Ya lo pone: ' + own[1].toLowerCase(), 'burdeos'] : ['Acento', ACC_DEF[cat][1], ACC_DEF[cat][0], 1]);
+  }
+  return rows;
+};
+const eur = n => n.toLocaleString('es-ES', {minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2}) + ' €';
+const tot = ids => ids.reduce((t, id) => t + P[id][2], 0);
+const totals = ML.map(c => tot(c[3]));
+$('ml-np').textContent = String(new Set(ML.flatMap(c => c[3])).size + Object.values(ALT).flat().filter(a => !ML.some(c => c[3].includes(a))).length);
+$('ml-title').textContent = ML.length + ' combinaciones más, con producto';
+$('ml-intro').textContent = 'Las ' + ML.length + ' salen de ' + new Set(ML.flatMap(c => c[3])).size + ' prendas, así que muchas se repiten entre combinaciones.';
+$('ml-min').textContent = eur(Math.min(...totals));
+$('ml-max').textContent = eur(Math.max(...totals));
+$('ml-combos').innerHTML = ML.map(([cat, t, d, ids], i) => `<article class="mol-card jose-ml" data-cat="${esc(cat)}"><div class="mol-card__body"><p class="jose-kicker">${esc(cat)}</p><h3 class="mol-card__title atom-title atom-title--h4 syx-mt-2">${esc(t)}</h3><p class="jose-note syx-mb-2">${esc(d)}</p>${outfit(mlRows(cat, ids, i))}<h4 class="atom-title atom-title--h6 syx-mt-3 syx-mb-2">Dónde comprarlo</h4><ul class="jose-ml__items">${ids.map(id => { const [n, b, pr, was, u, c] = P[id]; return `<li>${dot(c)}<span><a class="atom-link" href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a><br><small class="jose-note">${esc(((ROLE_FIX[i] || {})[id] || ROLE(id)) + ' · ' + b)}</small></span><span class="jose-price">${eur(pr)}${was ? `<br><small class="jose-note"><s>${eur(was)}</s></small>` : ''}</span>${(ALT[id] || []).map(a => `<small class="jose-ml__alt">Otra opción: <a class="atom-link" href="${esc(P[a][4])}" target="_blank" rel="noopener">${esc(P[a][0])}</a> · ${esc(P[a][1])} · ${eur(P[a][2])}</small>`).join('')}</li>`; }).join('')}</ul><p class="jose-ml__total syx-mt-2"><span>Total si lo compras todo</span><span class="jose-price">${eur(totals[i])}</span></p></div></article>`).join('');
+const mlf = $('ml-filtros');
+const paintML = sel => {
+  mlf.innerHTML = cats.map(c => `<button type="button" class="atom-btn atom-btn--size-sm ${c === sel ? 'atom-btn--primary atom-btn--filled' : 'atom-btn--tertiary'}" aria-pressed="${c === sel}" data-cat="${esc(c)}">${esc(c)}</button>`).join('');
+  for (const card of document.querySelectorAll('.jose-ml')) card.hidden = !(sel === 'Todas' || card.dataset.cat === sel);
+};
+mlf.addEventListener('click', e => { const b = e.target.closest('button'); if (b) { paintML(b.dataset.cat); mlf.querySelector('[aria-pressed="true"]').focus(); } });
+paintML('Todas');
+
+
+const CN = [['marino','Azul marino'],['carbon','Gris carbón'],['gris','Gris medio'],['indigo','Índigo'],['crudo','Crudo'],['roto','Blanco roto'],['arena','Arena'],['camel','Camel'],['chocolate','Chocolate'],['oliva','Verde oliva'],['botella','Verde botella'],['petroleo','Azul petróleo'],['burdeos','Burdeos'],['terracota','Terracota']];
+const NM = Object.fromEntries(CN);
+const R = {};
+const setR = (v, list) => { for (const [a, bs] of list) for (const b of bs) { R[a + '|' + b] = v; R[b + '|' + a] = v; } };
+setR(2, [
+  ['marino', ['crudo','roto','gris','camel','chocolate','burdeos','arena','oliva','terracota']],
+  ['carbon', ['crudo','roto','burdeos','camel','botella','petroleo']],
+  ['gris', ['burdeos','crudo','chocolate','botella','petroleo','roto']],
+  ['indigo', ['roto','crudo','camel','oliva','chocolate','arena','terracota']],
+  ['crudo', ['oliva','chocolate','botella','petroleo','burdeos','terracota']],
+  ['roto', ['oliva','botella','chocolate','petroleo']],
+  ['oliva', ['camel','chocolate','burdeos']],
+  ['botella', ['camel','burdeos']],
+  ['camel', ['chocolate','burdeos']],
+  ['chocolate', ['arena']]
+]);
+setR(0, [
+  ['burdeos', ['terracota']],
+  ['petroleo', ['botella','terracota']],
+  ['crudo', ['arena']],
+  ['arena', ['roto']],
+  ['oliva', ['botella']]
+]);
+const rate = (a, b) => a === b ? 't' : (R[a + '|' + b] ?? 1);
+const why = {
+  'burdeos|terracota': 'dos acentos cálidos que compiten',
+  'petroleo|botella': 'dos verdes azulados que se pelean',
+  'petroleo|terracota': 'contraste muy fuerte para tu estilo sobrio',
+  'crudo|arena': 'dos claros juntos te apagan la cara',
+  'arena|roto': 'dos claros juntos te apagan la cara',
+  'oliva|botella': 'verdes cercanos que parecen un error'
+};
+const whyOf = (a, b) => why[a + '|' + b] || why[b + '|' + a] || '';
+const chipsEl = $('cp-chips');
+const swatch = k => `<span class="jose-chip" style="--jose-c:${C[k]}"></span>`;
+const pairHTML = (a, list) => list.length ? `<div class="jose-pair">${list.map(b => `<div class="jose-pair__item"><div class="jose-pair__duo"><span style="--jose-c:${C[a]}"></span><span style="--jose-c:${C[b]}"></span></div><span>${esc(NM[b])}</span>${whyOf(a, b) ? `<small class="jose-note">${esc(whyOf(a, b))}</small>` : ''}</div>`).join('')}</div>` : '<p class="jose-note">Ninguno.</p>';
+const pick = k => {
+  chipsEl.innerHTML = CN.map(([c, n]) => `<button type="button" class="atom-btn atom-btn--size-sm ${c === k ? 'atom-btn--primary atom-btn--filled' : 'atom-btn--tertiary'}" aria-pressed="${c === k}" data-c="${c}">${swatch(c)}${esc(n)}</button>`).join('');
+  const others = CN.map(x => x[0]).filter(c => c !== k);
+  const by = v => others.filter(c => rate(k, c) === v);
+  $('cp-result').innerHTML = [['Combina muy bien con', by(2)], ['También funciona con', by(1)], ['Mejor evitar con', by(0)]].map(([t, l]) => `<div><h3 class="atom-title atom-title--h5 syx-mb-2">${esc(t)}</h3>${pairHTML(k, l)}</div>`).join('');
+};
+chipsEl.addEventListener('click', e => { const b = e.target.closest('button'); if (b) { pick(b.dataset.c); chipsEl.querySelector('[aria-pressed="true"]').focus(); } });
+pick('marino');
+const formulas = [
+  ['Oficina con un toque', [['Capa','Americana','marino'],['Arriba','Camisa','crudo'],['Abajo','Pantalón de franela','gris'],['Zapatos','Mocasín o chukka','chocolate'],['Acento','Pañuelo de bolsillo','burdeos']]],
+  ['Invierno en la ciudad', [['Abrigo','Abrigo','camel'],['Arriba','Cuello alto','crudo'],['Abajo','Pantalón de franela','carbon'],['Zapatos','Chelsea de ante','chocolate'],['Acento','Bufanda','burdeos']]],
+  ['Fin de semana cálido', [['Capa','Sobrecamisa','oliva'],['Arriba','Camiseta','roto'],['Abajo','Vaquero','indigo'],['Zapatos','Zapatilla de piel','roto'],['Acento','Bufanda','burdeos']]],
+  ['Casual de diario', [['Arriba','Polo de punto','marino'],['Abajo','Chino','arena'],['Zapatos','Zapatilla de piel','roto'],['Acento','Cinturón y reloj de piel','chocolate']]],
+  ['Verde con calma', [['Capa','Americana','botella'],['Arriba','Cuello alto','crudo'],['Abajo','Pantalón de franela','gris'],['Zapatos','Chelsea de ante','chocolate'],['Acento','Calcetines','burdeos']]],
+  ['Marrón y marino', [['Capa','Chaqueta de lana','chocolate'],['Arriba','Jersey','marino'],['Abajo','Chino','arena'],['Zapatos','Chukka de ante','chocolate'],['Acento','Bufanda','terracota']]],
+  ['Camisa de color', [['Capa','Americana','marino'],['Arriba','Camisa','petroleo'],['Abajo','Pantalón de franela','gris'],['Zapatos','Mocasín','chocolate'],['Acento','Pañuelo de bolsillo','burdeos']]],
+  ['Monocromo cálido', [['Abrigo','Abrigo','camel'],['Arriba','Jersey','crudo'],['Abajo','Pantalón de pana','chocolate'],['Zapatos','Chelsea de ante','chocolate'],['Acento','Bufanda','burdeos']]],
+  ['Domingo índigo', [['Capa','Sobrecamisa vaquera','indigo'],['Arriba','Camiseta','roto'],['Abajo','Chino','oliva'],['Zapatos','Zapatilla de piel','roto'],['Acento','Bufanda','terracota']]],
+  ['Noche oscura', [['Capa','Bomber de pana','chocolate'],['Arriba','Cuello alto','marino'],['Abajo','Pantalón de franela','carbon'],['Zapatos','Chelsea de ante','chocolate'],['Acento','Calcetines','burdeos']]]
+];
+$('cp-formulas').innerHTML = formulas.map(([t, rows]) => `<div class="mol-card mol-card--flat"><div class="mol-card__body"><h3 class="atom-title atom-title--h5 syx-mb-2">${esc(t)}</h3>${outfit(rows)}</div></div>`).join('');
+const mark = v => v === 2 ? '<span class="jose-mark jose-mark--2"></span>' : v === 1 ? '<span class="jose-mark jose-mark--1"></span>' : v === 0 ? '<span class="jose-mark jose-mark--0">×</span>' : '<span class="jose-mark jose-mark--t">=</span>';
+const lbl = v => ({2: 'combinan muy bien', 1: 'funcionan', 0: 'mejor evitar', t: 'mismo color'})[v];
+$('cp-matrix').innerHTML = `<thead><tr><th scope="col"><span class="syx-sr-only">Color</span></th>${CN.map(([c, n]) => `<th scope="col"><div class="jose-matrix__head"><span>${esc(n)}</span>${swatch(c)}</div></th>`).join('')}</tr></thead><tbody>${CN.map(([a, na]) => `<tr><th scope="row">${swatch(a)}${esc(na)}</th>${CN.map(([b, nb]) => { const v = rate(a, b); return `<td title="${esc(na + ' + ' + nb + ': ' + lbl(v))}" aria-label="${esc(na + ' con ' + nb + ': ' + lbl(v))}">${mark(v)}</td>`; }).join('')}</tr>`).join('')}</tbody>`;
+
+const SV = '<span class="atom-pill atom-pill--warning">Sin verificar</span>';
+const A = (u, t) => `<a class="atom-link" href="${u}" target="_blank" rel="noopener">${esc(t)}</a>`;
+const compra = [
+  ['Look 1: oficina', ['Prenda','Qué buscar','Producto','Precio','Nota'], [
+    ['Americana marino','Lana, hombro natural, poca estructura; reserva 30–80 € para el sastre', A('https://suitsupply.com/es-es/men/jackets/blazer-havana-azul-marino-corte-tailored/C25216.html','Suitsupply Havana azul marino C25216'),'299 €','Lana Reda, media entretela. Agotada el 25/11: mira otras Havana marino en '+A('https://suitsupply.com/es-es/men/jackets/blazer-havana-azul-marino/C1847.html','la sección de americanas')],
+    ['Pantalón franela gris','Franela (da peso visual), recto, tiro medio', A('https://suitsupply.com/es-es/men/trousers/pantalones-de-traje-gris-oscuro-straight-leg/B6905.html','Suitsupply franela gris oscuro B6905'),'169 €','Lana S120’s, Vitale Barberis Canonico. También en '+A('https://suitsupply.com/es-es/men/trousers/mid-grey-straight-leg-suit-trousers/B6906.html','gris medio B6906')],
+    ['Cuello alto crudo','Merino fino de 12 galgas o más, crudo', SV+' Uniqlo merino extrafino, o la '+A('https://www.massimodutti.com/es/hombre/jerseis/merino-collection-n1537','colección merino de Massimo Dutti'),'≈40–80 €','La web de Massimo no cargó los productos'],
+    ['Chukka ante marrón (asequible)','Calzado de diario: aquí conviene invertir', A('https://www.charlestyrwhitt.com/eu/es_ES/botas-chukka-de-ante---marr%C3%B3n-tabaco/SHS0009TBR.html','Charles Tyrwhitt chukka ante tabaco'),'129 €','Antes 199 €. Forro de piel. Sin stock en 44–46'],
+    ['Chukka ante marrón (inversión)','', A('https://www.careofcarl.com/en/crockett-jones-tetbury-chukka-dark-brown-suede','Crockett & Jones Tetbury, ante marrón oscuro'),'690 €','Suela Dainite, cosido Goodyear, se puede resolar durante décadas']]],
+  ['Look 2: fin de semana', ['Prenda','Qué buscar','Producto','Precio','Nota'], [
+    ['Abrigo camel (asequible)','Abrigo: invertir; lana densa, largo medio', A('https://www.charlestyrwhitt.com/eu/es_ES/abrigo-de-lana-pura---camel-claro/OUF0082LIC.html','Charles Tyrwhitt abrigo lana pura camel claro'),'276,75 €','Antes 369 €. Merino 100 %'],
+    ['Abrigo camel (premium)','', A('https://suitsupply.com/es-es/men/coats/abrigo-marron-intermedio/J1655.html','Suitsupply abrigo de pelo de camello'),'699 €','100 % camello, largo a medio muslo'],
+    ['Sobrecamisa oliva','Lana con cuerpo, corte recto', A('https://www.cos.com/es-es/men/menswear/shirts/cottonshirts/product/relaxed-boiled-wool-overshirt-dark-khaki-1304346001','COS sobrecamisa lana hervida, caqui oscuro'),'119 €','57 % lana RWS. Tallas S–XL con aviso de reposición'],
+    ['Vaquero índigo oscuro','Recto, sin elastano ni rotos', A('https://www.levi.com/ES/es_ES/ropa/hombre/vaqueros/jean-501-levis-original/p/005010162','Levi’s 501 Original, lavado oscuro'),'70,40 €','Antes 110 €. 100 % algodón'],
+    ['Camiseta blanco roto','Ahorra en básicos; buen gramaje', A('https://www.uniqlo.com/es/es/products/E465193-000/00?colorDisplayCode=16','Uniqlo AIRism algodón cuello redondo'),'24,90 €',SV+' Sunspel (≈80–95 €) o Asket (≈35 €) como opción superior'],
+    ['Zapatilla piel blanco roto','Lisa, minimalista, sin estética de running', SV+' Veja Campo, Ecco Soft 60 o Clae Bradley','≈120–150 €','El enlace de Veja en Zalando estaba agotado'],
+    ['Bufanda burdeos','Lana o lambswool, único acento', SV+' Arket o COS, lana','≈50–80 €','']]],
+  ['Básicos extra', ['Prenda','Sugerencia','Precio'], [
+    ['Camisa oxford blanco roto, cuello italiano', SV+' Massimo Dutti o Suitsupply','50–90 €'],
+    ['Camisa azul petróleo', SV+' Massimo Dutti o Suitsupply','50–90 €'],
+    ['Polo de punto marino y crudo', SV+' Massimo Dutti, Arket o Sunspel','60–150 €'],
+    ['Chino arena, slim recto', SV+' Massimo Dutti, Arket o Uniqlo','40–90 €'],
+    ['Jersey cuello redondo burdeos', SV+' Arket, COS o Uniqlo','40–100 €'],
+    ['Pañuelo de bolsillo burdeos', SV+' tienda de complementos de caballero','20–40 €']]],
+  ['Arreglo personal', ['Producto','Por qué','Fuente'], [
+    ['Champú matizador violeta, una vez por semana','Evita el amarillo en las canas (ASE-008)', A('https://www.loreal-paris.es/elvive/color-vive-violeta/champu-violeta-matizador','Elvive Color Vive Violeta')+' ≈7–9 € en Primor, Druni o Douglas'],
+    ['Recortadora con peines guía','Perfilar cada 3–7 días, en seco (ASE-002)', SV+' Philips Serie 7000 o Braun Serie 7, ≈60–80 €'],
+    ['Arcilla mate','Textura sin brillo para el pelo ondulado (ASE-001)', SV+' American Crew Fiber o Baxter Clay Pomade']]]
+];
+$('compra-tabs').innerHTML = compra.map(([t], i) => `<button class="mol-tabs__tab" role="tab" type="button" id="ct-${i}" aria-controls="cp-${i}" aria-selected="${i === 0}" ${i ? 'tabindex="-1"' : ''}>${esc(t)}</button>`).join('');
+$('compra-panels').innerHTML = compra.map(([t, head, rows], i) => {
+  const pi = head.indexOf('Precio');
+  return `<div class="mol-tabs__panel" role="tabpanel" id="cp-${i}" aria-labelledby="ct-${i}" ${i ? 'hidden' : ''}><div class="atom-table__container jose-stack"><table class="atom-table atom-table--resp"><thead><tr>${head.map((h, j) => `<th class="atom-table__th${j === pi ? ' jose-price' : ''}" scope="col">${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map((c, j) => `<td class="atom-table__td${j === pi ? ' jose-price' : ''}" data-l="${esc(head[j])}">${j === 0 ? `<strong>${esc(c)}</strong>` : c}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>`;
+}).join('');
+
+const arreglo = [
+  ['Barba corta y uniforme', '6–10 mm', ['Laterales que no bajen de la medida: la barba lateral ensancha un rostro alargado.', 'Perfila cuello y mejillas cada 3–7 días, en seco.', 'Tu barba es más densa en bigote y mentón: iguala con peine guía para que no alargue la cara.']],
+  ['Pelo con volumen lateral', 'Ondulado, castaño oscuro', ['Algo de volumen a los lados y largo medio arriba.', 'Evita el tupé muy alto: alarga todavía más el rostro.', 'Arcilla mate para dar textura sin brillo.']],
+  ['Canas que suman', 'Sal y pimienta en sienes', ['Champú matizador violeta una vez por semana o cada quince días.', 'Compensa el contraste que restan con marino, carbón, burdeos y verdes profundos.', 'Evita beiges y amarillos pálidos cerca de la cara.']]
+];
+$('arreglo-cards').innerHTML = arreglo.map(([t, s, l]) => `<article class="mol-card"><div class="mol-card__body"><p class="jose-kicker">${esc(s)}</p><h3 class="mol-card__title atom-title atom-title--h4 syx-mt-2">${esc(t)}</h3><ul class="jose-garments jose-dash syx-mt-2">${l.map(x => `<li><span>${esc(x)}</span></li>`).join('')}</ul></div></article>`).join('');
+// Versión sofisticada: [rol, prenda, color, nombre, marca, precio, antes, url]
+const RS = 'https://www.reiss.com/es/es/style/', CT = 'https://www.charlestyrwhitt.com/eu/es_ES/', SS = 'https://suitsupply.com/es-es/men/';
+const SQ = {
+  amCuadros:['Arriba','Americana de cuadros, lana con lino','marino','Americana de cuadros en lana con lino','Reiss','113 €','385 €',RS+'su986650/v42694'],
+  dbChoc:['Arriba','Blazer cruzado de cuadros','chocolate','Blazer cruzado de cuadros, corte clásico','Reiss','256 €','515 €',RS+'sv076152/v79129'],
+  anteOliva:['Capa','Chaqueta de ante','oliva','Chaqueta de ante con cremallera','Reiss','320 €','515 €',RS+'su962823/w16006'],
+  abrigo:['Abrigo','Abrigo de lana','camel','Abrigo de lana pura, camel claro','Charles Tyrwhitt','276,75 €','369 €',CT+'abrigo-de-lana-pura---camel-claro/OUF0082LIC.html'],
+  rollMar:['Debajo','Cuello alto de merino','marino','Jersey de merino de cuello alto','Charles Tyrwhitt','74,95 €','99,95 €',CT+'jersey-de-merino-de-cuello-alto---marino/KNJ0070NAV.html'],
+  camMer:['Debajo','Camisa de merino','marino','Camisa de lana merino abotonada','Reiss','63 €','130 €',RS+'sv072288/g25622'],
+  poloCamel:['Arriba','Polo de punto de merino','camel','Polo de manga larga de merino, camel','Reiss','130 €','',RS+'sv263939/v79111'],
+  poloChoc:['Debajo','Polo de merino, cuello abierto','chocolate','Polo de cuello abierto de merino, chocolate','Reiss','130 €','',RS+'su666683/f72420'],
+  poloBur:['Debajo','Polo de punto de merino','burdeos','Polo de manga larga de merino, burdeos','Reiss','130 €','',RS+'sv263939/y56447'],
+  franGris:['Abajo','Pantalón de franela','gris','Pantalón de franela gris medio','Suitsupply','169 €','',SS+'trousers/mid-grey-straight-leg-suit-trousers/B6906.html'],
+  franOsc:['Abajo','Pantalón de franela','carbon','Pantalón de franela gris oscuro','Suitsupply','169 €','',SS+'trousers/pantalones-de-traje-gris-oscuro-straight-leg/B6905.html'],
+  pana:['Abajo','Pantalón de pana','chocolate','Pantalón de pana (elige marrón)','Massimo Dutti','59,95 €','','https://www.massimodutti.com/es/men/trousers/corduroy-n1654'],
+  chinoCru:['Abajo','Chino de piqué','crudo','Chino tailored de piqué de algodón, crudo','Reiss','130 €','','https://www.reiss.com/es/en/style/su975259/g69737'],
+  chinoMar:['Abajo','Chino tailored','marino','Chino tailored de algodón elástico, marino','Reiss','155 €','','https://www.reiss.com/es/en/style/sv179404/159231'],
+  mocSS:['Zapatos','Mocasín de ante','chocolate','Mocasín de ante, marrón oscuro','Suitsupply','199 €','',SS+'shoes/mocasin-marron-oscuro/FLF10008B01.html'],
+  mocCT:['Zapatos','Mocasín de ante','camel','Mocasín de ante, marrón tabaco','Charles Tyrwhitt','126,75 €','169 €','https://www.charlestyrwhitt.com/fr/mocassins-en-daim---marron-tabac/SHC0256SBR.html'],
+  chelsea:['Zapatos','Chelsea de ante','chocolate','Botas chelsea de ante, chocolate','Charles Tyrwhitt','149,25 €','199 €',CT+'botas-chelsea-de-ante-con-suela-de-goma---marr%C3%B3n-chocolate/SHS0004CHC.html'],
+  desert:['Zapatos','Desert Boot de ante','chocolate','Desert Boot Brown Suede','Clarks','117 €','130 €','https://www.clarks.com/en-es/desert-boot/26188310-p'],
+  panuelo:['Acento','Pañuelo de bolsillo de seda y lana','gris','Pañuelo de bolsillo de cuadros, gris plata','Charles Tyrwhitt','12,95 £','','https://www.charlestyrwhitt.com/intl/silk-wool-check-pocket-square---silver/TIP0327SLV.html'],
+  bufBur:['Acento','Bufanda de cachemir','burdeos','Bufanda de cachemir en espiga, burdeos','Charles Tyrwhitt','74,95 €','99,95 €',CT+'bufanda-de-cachemir-en-espiga---rojo-burdeos/ACC0233MRN.html'],
+  bufChoc:['Acento','Bufanda de cachemir','chocolate','Bufanda de cachemir, chocolate','Charles Tyrwhitt','74,95 €','99,95 €',CT+'bufanda-de-cachemir---marr%C3%B3n-chocolate/ACC0235CHC.html'],
+};
+const SOF = [
+  ['Trabajo','Cuello alto bajo americana','El cuello alto sustituye a camisa y corbata: más moderno y sigue siendo serio.',['amCuadros','rollMar','franGris','mocSS','panuelo']],
+  ['Trabajo','Cruzado chocolate','El cruzado ensancha el torso; la camisa de merino marino le da contraste sin corbata.',['dbChoc','camMer','franOsc','mocCT']],
+  ['Casual','Camel y chocolate, tono sobre tono','Dos marrones con textura distinta: punto liso arriba, pana abajo.',['poloCamel','pana','chelsea','bufChoc']],
+  ['Casual','Ante oliva','La chaqueta de ante es la pieza que eleva un fin de semana; el resto, sencillo.',['anteOliva','poloChoc','chinoCru','desert']],
+  ['Más arreglado','Abrigo camel en la ciudad','Camel sobre marino y gris: el clásico de invierno que más favorece a tu contraste.',['abrigo','rollMar','franOsc','chelsea','bufBur']],
+  ['Más arreglado','Cena con burdeos','Marino arriba y abajo, con el burdeos como único color junto a la cara.',['amCuadros','poloBur','chinoMar','mocSS','panuelo']],
+];
+$('sof-combos').innerHTML = SOF.map(([cat, t, d, ids]) => `<article class="mol-card"><div class="mol-card__body"><p class="jose-kicker">${esc(cat)}</p><h3 class="mol-card__title atom-title atom-title--h4 syx-mt-2">${esc(t)}</h3><p class="jose-note syx-mb-2">${esc(d)}</p>${outfit(ids.map(id => SQ[id].slice(0, 3)))}<h4 class="atom-title atom-title--h6 syx-mt-3 syx-mb-2">Dónde comprarlo</h4><ul class="jose-ml__items">${ids.map(id => { const [r, , c, n, b, pr, was, u] = SQ[id]; return `<li>${dot(c)}<span><a class="atom-link" href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a><br><small class="jose-note">${esc(r + ' · ' + b)}</small></span><span class="jose-price">${esc(pr)}${was ? `<br><small class="jose-note"><s>${esc(was)}</s></small>` : ''}</span></li>`; }).join('')}</ul></div></article>`).join('');
+}
+</script>
+<script src="js/syx-tabs.local.js"></script>
+<script src="vendor/gsap/gsap.min.js"></script>
+<script src="vendor/gsap/ScrollTrigger.min.js"></script>
+<script src="vendor/gsap/SplitText.min.js"></script>
+<script src="vendor/lenis/lenis.min.js"></script>
+<script src="js/orquestador.js"></script>
+<script src="js/movimiento.js"></script>
+</body>
+</html>
